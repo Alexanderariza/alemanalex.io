@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Elements - Phantom by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <title>Iframe Responsivo para iPhone 13</title>
+    <style>
+        /* Asegura que el iframe y el contenedor se adapten al tamaño de la pantalla */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 150%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            margin: auto; /* Centra el iframe en contenedores más grandes */
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+		        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 800px; /* Ajusta el ancho máximo según tus necesidades */
+            margin: auto;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+	
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">alemalex</span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<h2>Menu</h2>
+						<ul>
+							<li><a href="index.html">Home</a></li>
+							<li><a href="gramar.html">Gramática para Dummis</a></li>
+							<li><a href="vocal.html">Vocabulario básico</a></li>
+							<li><a href="lesen.html">Escuchar y Leer</a></li>
+							<li><a href="test.html">Test & Treiner</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Vocabulario</h1>
+							<h1>Wortschatz</h1><button class="play-button" onclick="speak('Wortschatz')"><i class="fas fa-volume-up"></i></button>
+							
+							
+							<!-- Text -->
+								<section>
+									<h2>Escucha y repite</h2>
+									<hr />
+										<p>Estudia y repasa palabras en intervalos de tiempo crecientes.</p>
+									<hr />
+									<h2>Level 1</h2>
+									<hr />
+									<div class="iframe-container">
+										<iframe src="https://es.wikibooks.org/wiki/Alem%C3%A1n/Vocabulario" title="Vocabulario"></iframe>
+									</div>
+									
+								</section>
+
+							<!-- Lists -->
+								<section>
+
+									<div class="row">
+										<div class="col-6 col-12-medium">
+											<hr />
+											<h2>Tips</h2>
+
+											<h3>Consejos para Aprender Vocabulario</h3>
+												<ol>
+													<li>Uso de Tarjetas de Memoria (Flashcards)
+														<ul>
+															<li>Método: Usa tarjetas físicas o aplicaciones como Anki, Quizlet o Brainscape. Escribe la palabra en un lado y la definición, ejemplo o traducción en el otro.</li>
+															<li>Consejo: Revisa las tarjetas de manera espaciada para reforzar la memoria a largo plazo.</li>
+														</ul>
+													</li>
+													<li>Contextualización
+														<ul>
+															<li>Método: Aprende nuevas palabras en contexto. Lee libros, artículos o escucha podcasts en el idioma que estás aprendiendo.</li>
+															<li>Consejo: Intenta usar las nuevas palabras en frases o situaciones reales para entender mejor su uso.</li>
+														</ul>
+													</li>
+													<li>Asociación y Visualización
+														<ul>
+															<li>Método: Relaciona palabras nuevas con imágenes o situaciones que te sean familiares.</li>
+															<li>Consejo: Crea historias o imágenes mentales para cada palabra que desees aprender.</li>
+														</ul>
+													</li>
+													<li>Repetición Espaciada
+														<ul>
+															<li>Método: Estudia y repasa palabras en intervalos de tiempo crecientes.</li>
+															<li>Consejo: Utiliza aplicaciones de repetición espaciada que te ayuden a repasar vocabulario en momentos óptimos.</li>
+														</ul>
+													</li>
+													<li>Uso Activo del Vocabulario
+														<ul>
+															<li>Método: Trata de utilizar las nuevas palabras en conversaciones, escritos o incluso en tu propio diario.</li>
+															<li>Consejo: Practica hablando con hablantes nativos o compañeros de estudio para afianzar el vocabulario.</li>
+														</ul>
+													</li>
+													<li>Listas de Palabras Temáticas
+														<ul>
+															<li>Método: Agrupa palabras por temas o categorías (por ejemplo, comida, viaje, trabajo).</li>
+															<li>Consejo: Aprender vocabulario relacionado con temas de interés personal puede hacer el proceso más relevante y divertido.</li>
+														</ul>
+													</li>
+													<li>Aplicaciones y Juegos de Vocabulario
+														<ul>
+															<li>Método: Usa aplicaciones y juegos diseñados para aprender vocabulario, como Duolingo, Memrise o Wordament.</li>
+															<li>Consejo: La gamificación puede hacer que el aprendizaje sea más interactivo y menos monótono.</li>
+														</ul>
+													</li>
+													<li>Lectura y Escucha Activa
+														<ul>
+															<li>Método: Lee libros, artículos, o escucha podcasts y audiolibros en el idioma que estás aprendiendo.</li>
+															<li>Consejo: Anota y busca palabras desconocidas mientras lees o escuchas para ampliarlas a tu vocabulario.</li>
+														</ul>
+													</li>
+													<li>Establece Metas Pequeñas
+														<ul>
+															<li>Método: Define metas diarias o semanales para aprender una cantidad específica de palabras.</li>
+															<li>Consejo: Mantén tus objetivos alcanzables y celebra los logros para mantenerte motivado.</li>
+														</ul>
+													</li>
+													<li>Práctica Regular
+														<ul>
+															<li>Método: Dedica tiempo cada día a estudiar vocabulario.</li>
+															<li>Consejo: La consistencia es clave para la retención a largo plazo.</li>
+														</ul>
+													</li>
+												</ol>
+										</div>
+									</div>
+									
+									<!-- videos -->
+									<hr />
+										<h1>Videos</h1>
+									<div class="row">
+									
+										<h2>1000 frases</h2>
+										<div class="video-container">
+											<iframe width="560" height="315" src="https://www.youtube.com/embed/2164-2HuRfs?si=r6lGEURfzbgYtnRw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										</div>
+									</div>
+								</section>
+
+									<!-- treiner -->
+									<hr />
+
+										<h1>Dictado Trainer</h1>
+										<div class="iframe-container">
+											<iframe src="https://dict.leo.org/trainer/index.php?lp=esde&lang=es" title="LEO Trainer"></iframe>
+										</div>
+
+									<!-- treiner -->
+									<hr />
+										<h1>Imagen Trainer</h1>
+										<div class="iframe-container">
+											<iframe src="https://alemangratis.net/category/juegos/vocabulario/vocabulario-con-imagenes/" title="Bilder Trainer"></iframe>
+										</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="copyright">
+								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+		    <!-- Scripts voice -->
+    <script>
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                var utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE'; // Configura el idioma a alemán
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Lo siento, tu navegador no soporta la síntesis de voz.');
+            }
+        }
+    </script>
+
+	</body>
+</html>
