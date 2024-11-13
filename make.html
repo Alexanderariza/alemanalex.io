@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Arrastra y Suelta para Formar Oraciones</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <style>
+        .drop-container {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 10px;
+        border: 2px dashed #333;
+        min-height: 50px;
+        justify-content: center;
+        align-items: center;
+        }
+        .word {
+        padding: 8px 12px;
+        background-color: #d0e0ff;
+        border: 1px solid #333;
+        cursor: move;
+        margin: 5px;
+        font-weight: bold;
+        display: inline-block;
+        }
+        .success {
+        border-color: green;
+        color: green;
+        }
+        </style>
+    </head>
+
+    <body class="is-preload">
+    <!-- Wrapper -->
+  <div id="wrapper">
+                      <!-- Header -->
+              <header id="header">
+                <div class="inner">
+      
+                  <!-- Logo -->
+                    <a href="index.html" class="logo">
+                      <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+                    </a>
+      
+                  <!-- Nav -->
+                    <nav>
+                      <ul>
+                        <li><a href="#menu">Menu</a></li>
+                      </ul>
+                    </nav>
+      
+                </div>
+              </header>
+          <!-- Menu -->
+          <nav id="menu">
+            <h2>Menu</h2>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="gramar.html">Gramática para Dummis</a></li>
+              <li><a href="vocal.html">Vocabulario básico</a></li>
+              <li><a href="lesen.html">Escuchar y Leer</a></li>
+              <li><a href="test.html">Test & Treiner</a></li>
+            </ul>
+          </nav>
+   <!-- Main -->
+   <div id="main">
+    <div class="inner">
+      <hr />
+
+        <h2>Arrastra y Suelta: Forma la Oración Correcta en Alemán</h2>
+
+        <div id="words">
+        <div class="word" draggable="true" ondragstart="drag(event)" id="word1">ist</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="word2">Hund</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="word3">Der</div>
+        <div class="word" draggable="true" ondragstart="drag(event)" id="word4">hier</div>
+        </div>
+
+        <p>Arrastra las palabras al recuadro de abajo para formar la oración: "<em>...</em>"</p>
+        <div class="drop-container" id="sentence" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+        <p id="feedback" style="font-weight: bold;"></p>
+
+    </div>
+   </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+          <ul class="copyright">
+            <li>&copy; AlemAlex. All rights reserved</li>
+            <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+          </ul>
+        </div>
+      </footer>
+
+  </div>
+<!-- Scripts -->
+<script>
+  function allowDrop(event) {
+    event.preventDefault();
+  }
+
+  function drag(event) {
+    event.dataTransfer.setData("text", event.target.id);
+  }
+
+  function drop(event) {
+    event.preventDefault();
+    const wordId = event.dataTransfer.getData("text");
+    const word = document.getElementById(wordId);
+    event.target.appendChild(word);
+
+    checkSentence();
+  }
+
+  function checkSentence() {
+    const sentenceContainer = document.getElementById("sentence");
+    const feedback = document.getElementById("feedback");
+
+    const correctOrder = ["word3", "word2", "word1", "word4"];
+    const words = Array.from(sentenceContainer.children).map(word => word.id);
+
+    if (words.length === correctOrder.length && words.every((id, index) => id === correctOrder[index])) {
+      feedback.textContent = "¡Correcto! La oración es: Der Hund ist hier.";
+      feedback.classList.add("success");
+    } else {
+      feedback.textContent = "";
+    }
+  }
+</script>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+
+</body>
+</html>
