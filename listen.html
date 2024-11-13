@@ -1,0 +1,233 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Ejercicio de Escucha y Respuesta - AlemAlex</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+  <style>
+    /* Estilos Generales */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    .exercise-container {
+      background-color: #fff;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    .play-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .play-button:hover {
+      background-color: #45a049;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+    .input-group label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .input-group input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .submit-button {
+      background-color: #008CBA;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .submit-button:hover {
+      background-color: #007bb5;
+    }
+    .feedback {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .correct {
+      color: green;
+    }
+    .incorrect {
+      color: red;
+    }
+  </style>
+</head>
+
+<body class="is-preload">
+  <!-- Wrapper -->
+<div id="wrapper">
+                    <!-- Header -->
+            <header id="header">
+              <div class="inner">
+    
+                <!-- Logo -->
+                  <a href="index.html" class="logo">
+                    <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+                  </a>
+    
+                <!-- Nav -->
+                  <nav>
+                    <ul>
+                      <li><a href="#menu">Menu</a></li>
+                    </ul>
+                  </nav>
+    
+              </div>
+            </header>
+        <!-- Menu -->
+        <nav id="menu">
+          <h2>Menu</h2>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="gramar.html">Gramática para Dummis</a></li>
+            <li><a href="vocal.html">Vocabulario básico</a></li>
+            <li><a href="lesen.html">Escuchar y Leer</a></li>
+            <li><a href="test.html">Test & Treiner</a></li>
+          </ul>
+        </nav>
+ <!-- Main -->
+ <div id="main">
+  <div class="inner">
+    <hr />
+
+  <h1>Ejercicio de Escucha y Respuesta</h1>
+  
+  <div class="exercise-container">
+    <!-- Botón para Reproducir la Frase -->
+    <button class="play-button" onclick="playPhrase()">Reproducir Frase</button>
+    
+    <!-- Instrucciones -->
+    <p>Escucha la frase en alemán y escribe lo que escuchaste en el campo de abajo:</p>
+    
+    <!-- Campo de Entrada -->
+    <div class="input-group">
+      <label for="user-answer">Tu Respuesta:</label>
+      <input type="text" id="user-answer" placeholder="Escribe la frase aquí">
+    </div>
+    
+    <!-- Botón de Verificación -->
+    <button class="submit-button" onclick="checkAnswer()">Verificar</button>
+    
+    <!-- Retroalimentación -->
+    <p id="feedback" class="feedback"></p>
+    
+    <!-- Botón para Cargar Nueva Frase -->
+    <button class="play-button" onclick="loadNewPhrase()">Cargar Nueva Frase</button>
+  </div>
+  
+  <!-- Archivos de Sonido -->
+  <audio id="correct-sound" src="correct.mp3"></audio>
+  <audio id="incorrect-sound" src="incorrect.mp3"></audio>
+  
+
+</div>
+</div>
+
+ <!-- Footer -->
+ <footer id="footer">
+     <div class="inner">
+       <ul class="copyright">
+         <li>&copy; AlemAlex. All rights reserved</li>
+         <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+       </ul>
+     </div>
+   </footer>
+
+</div>
+
+  <script>
+    // Lista de Frases en Alemán
+    const phrases = [
+      "Der Hund ist hier",       // El perro está aquí
+      "Die Katze schläft",       // El gato duerme
+      "Ich habe ein Buch",       // Yo tengo un libro
+      "Wir gehen zur Schule",    // Nosotros vamos a la escuela
+      "Sie trinkt Wasser"        // Ella bebe agua
+    ];
+    
+    let currentPhrase = "";
+    
+    // Función para Seleccionar una Frase Aleatoria
+    function loadNewPhrase() {
+      const randomIndex = Math.floor(Math.random() * phrases.length);
+      currentPhrase = phrases[randomIndex];
+      // Limpiar el campo de respuesta y retroalimentación
+      document.getElementById("user-answer").value = "";
+      const feedback = document.getElementById("feedback");
+      feedback.textContent = "";
+      feedback.classList.remove("correct", "incorrect");
+    }
+    
+    // Inicializar con una Frase Aleatoria
+    window.onload = loadNewPhrase;
+    
+    // Función para Reproducir la Frase usando SpeechSynthesis
+    function playPhrase() {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(currentPhrase);
+        utterance.lang = 'de-DE'; // Alemán de Alemania
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Lo siento, tu navegador no soporta la síntesis de voz.");
+      }
+    }
+    
+    // Función para Verificar la Respuesta del Usuario
+    function checkAnswer() {
+      const userAnswer = document.getElementById("user-answer").value.trim().toLowerCase();
+      const correctAnswer = currentPhrase.toLowerCase();
+      const feedback = document.getElementById("feedback");
+      const correctSound = document.getElementById("correct-sound");
+      const incorrectSound = document.getElementById("incorrect-sound");
+      
+      if (userAnswer === correctAnswer) {
+        feedback.textContent = "¡Correcto! La oración es: " + currentPhrase + ".";
+        feedback.classList.add("correct");
+        feedback.classList.remove("incorrect");
+        correctSound.play();
+      } else {
+        feedback.textContent = "Incorrecto. La respuesta correcta es: " + currentPhrase + ". Intenta de nuevo.";
+        feedback.classList.add("incorrect");
+        feedback.classList.remove("correct");
+        incorrectSound.play();
+      }
+    }
+  </script>
+  
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
