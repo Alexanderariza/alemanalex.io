@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Tarjetas de Vocabulario - AlemAlex</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    /* Estilo mejorado para el botón */
+    .test-button {
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .test-button:hover {
+      background-color: #45a049;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    }
+    .test-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+</head>
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gramar.html">Gramática para Dummis</a></li>
+        <li><a href="vocal.html">Vocabulario básico</a></li>
+        <li><a href="lesen.html">Escuchar y Leer</a></li>
+        <li><a href="test.html">Test & Treiner</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <br>
+        <hr />
+        <h2><center>UNIDAD 8: Am Wochenende</center></h2>
+        <h3><center>"El fin de semana"</center></h3>
+        <hr />
+        <div class="card-container">
+          <div class="card" onclick="flipCard(this); speakWord('der Hund')">
+            <div class="front"><b>der Hund🐕</b></div>
+            <div class="back"><b>Perro🐕</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('die Katze')">
+            <div class="front"><b>die Katze🐈</b></div>
+            <div class="back"><b>Gato🐈</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('das Haus')">
+            <div class="front"><b>das Haus🏠</b></div>
+            <div class="back"><b>Casa🏠</b></div>
+          </div>
+        </div>
+        
+            <!-- Botón de Test Mejorado -->
+    <div style="text-align: center; margin-top: 20px;">
+      <a href="train.html" class="test-button">Test Machen</a>
+    </div>
+
+        <br>
+        <hr />
+        <h2><center>UNIDAD 9: Maine Sachen</center></h2>
+        <h3><center>"Mis cosas"</center></h3>
+        <hr />
+        <div class="card-container">
+          <div class="card" onclick="flipCard(this); speakWord('ein richten')">
+            <div class="front"><b>ein richten⚙️</b></div>
+            <div class="back"><b>Renovar⚙️</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('das Poster')">
+            <div class="front"><b>das Poster🎴</b></div>
+            <div class="back"><b>Poster🎴</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('die Kerze')">
+            <div class="front"><b>die Kerze🕯️</b></div>
+            <div class="back"><b>Vela🕯️</b></div>
+          </div>
+        </div>
+        <br>
+        <hr />
+        <h2><center>UNIDAD 10: Kommunikation</center></h2>
+        <h3><center>"Comunicación"</center></h3>
+        <hr />
+        <div class="card-container">
+          <div class="card" onclick="flipCard(this); speakWord('das Paket')">
+            <div class="front"><b>das Paket📦</b></div>
+            <div class="back"><b>Paquete📦</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('der Briefmschlag')">
+            <div class="front"><b>der Briefmschlag✉</b></div>
+            <div class="back"><b>Sobre✉</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('die PostKarte')">
+            <div class="front"><b>die PostKarte🎫</b></div>
+            <div class="back"><b>Tarjeta postal🎫</b></div>
+          </div>
+        </div>
+        <br>
+        <hr />
+        <h2><center>UNIDAD 11: Unterwegs</center></h2>
+        <h3><center>"En el camino"</center></h3>
+        <hr />
+        <div class="card-container">
+          <div class="card" onclick="flipCard(this); speakWord('der Zoo')">
+            <div class="front"><b>der Zoo🦁🦒🐘🐒</b></div>
+            <div class="back"><b>Zoologico🦁🦒🐘🐒</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('der Tiger')">
+            <div class="front"><b>der Tiger🐯</b></div>
+            <div class="back"><b>Tigre🐯</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('das Zebra')">
+            <div class="front"><b>das Zebra🦓</b></div>
+            <div class="back"><b>Cebra🦓</b></div>
+          </div>
+        </div>
+        <br>
+        <hr />
+        <h2><center>UNIDAD 12: Raisen</center></h2>
+        <h3><center>"Viajar"</center></h3>
+        <hr />
+        <div class="card-container">
+          <div class="card" onclick="flipCard(this); speakWord('die Ostsee')">
+            <div class="front"><b>die Ostsee🌊</b></div>
+            <div class="back"><b>El Báltico 🌊</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('die Wahl')">
+            <div class="front"><b>die Wahl👉🏼</b></div>
+            <div class="back"><b>la elección👉🏼</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('dagegen')">
+            <div class="front"><b>dagegen🚫</b></div>
+            <div class="back"><b>en contra🚫</b></div>
+          </div>
+        </div>
+      </div>
+        <br>
+        <hr />
+        <h2><center>UNIDAD 13: Auf der Bank</center></h2>
+        <h3><center>"En el Banco"</center></h3>
+        <hr />
+        <div class="card-container">
+          <div class="card" onclick="flipCard(this); speakWord('der Betrag')">
+            <div class="front"><b>der Betrag 📈</b></div>
+            <div class="back"><b>Extracto 📈</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('das Konto')">
+            <div class="front"><b>das Konto💰</b></div>
+            <div class="back"><b>la cuenta 💰</b></div>
+          </div>
+          <div class="card" onclick="flipCard(this); speakWord('beantworten')">
+            <div class="front"><b>beantworten 😮‍💨</b></div>
+            <div class="back"><b>respuesta 😮‍💨</b></div>
+          </div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="copyright">
+          <li>&copy; AlemAlex. All rights reserved</li>
+          <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Script de Texto a Voz -->
+  <script>
+    function flipCard(card) {
+      card.classList.toggle("flipped");
+    }
+
+    function speakWord(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'de-DE';  // Alemán (Alemania)
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Tu navegador no soporta la función de síntesis de voz.");
+      }
+    }
+  </script>
+
+  <!-- Scripts adicionales -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+
+</body>
+</html>
