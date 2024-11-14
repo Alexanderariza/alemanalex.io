@@ -1,6 +1,6 @@
 # ALEMALEX
 App para refuerzo de aprendizaje A1-B1
-# ![AlemAlex](images/log.gif) AlemAlex
+# ![AlemAlex](images/log.gif) 
 
 **AlemAlex** es una aplicación interactiva para aprender alemán, diseñada para hacer el proceso de aprendizaje del vocabulario, gramática y pronunciación más dinámico y accesible. Este proyecto ofrece actividades de vocabulario, ejercicios de escucha y lectura, y test de comprensión auditiva y vocabulario.
 
