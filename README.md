@@ -1,8 +1,8 @@
-# ALEMALEX
+# DEULCHALEX
 App para refuerzo de aprendizaje del Aleman en sus niveles del A1 a B1
 # ![AlemAlex](images/logo.jpg) 
 
-**AlemAlex** es una aplicación interactiva para aprender alemán, diseñada para hacer el proceso de aprendizaje del vocabulario, gramática y pronunciación más dinámico y accesible. Este proyecto ofrece actividades de vocabulario, ejercicios de escucha y lectura, y test de comprensión auditiva y vocabulario.
+**DeulchAlex** es una aplicación interactiva para aprender alemán, diseñada para hacer el proceso de aprendizaje del vocabulario, gramática y pronunciación más dinámico y accesible. Este proyecto ofrece actividades de vocabulario, ejercicios de escucha y lectura, y test de comprensión auditiva y vocabulario.
 
 ## 🚀 Características principales
 
@@ -12,7 +12,7 @@ App para refuerzo de aprendizaje del Aleman en sus niveles del A1 a B1
 
 ## 🎯 Objetivo del Proyecto
 
-El propósito de **AlemAlex** es proporcionar una herramienta gratuita y efectiva para estudiantes de alemán, especialmente aquellos que están en los niveles inicial e intermedio, y desean mejorar su vocabulario y habilidades de comprensión.
+El propósito de **DeulchAlex** es proporcionar una herramienta gratuita y efectiva para estudiantes de alemán, especialmente aquellos que están en los niveles inicial e intermedio, y desean mejorar su vocabulario y habilidades de comprensión.
 
 ## 📂 Estructura del Proyecto
 
@@ -36,7 +36,7 @@ El propósito de **AlemAlex** es proporcionar una herramienta gratuita y efectiv
 
 ## 📥 Contribuciones
 
-Las contribuciones son bienvenidas. Si deseas mejorar **AlemAlex**, sigue estos pasos:
+Las contribuciones son bienvenidas. Si deseas mejorar **DeulchAlex**, sigue estos pasos:
 
 1. Haz un fork de este repositorio.
 2. Crea una rama con tu nueva funcionalidad: `git checkout -b nueva-funcionalidad`.
@@ -50,4 +50,4 @@ Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE)
 
 ---
 
-¡Gracias por visitar **AlemAlex**! Esperamos que disfrutes de la experiencia y que esta herramienta te ayude a alcanzar tus metas de aprendizaje en alemán.
+¡Gracias por visitar **DeulchAlex**! Esperamos que disfrutes de la experiencia y que esta herramienta te ayude a alcanzar tus metas de aprendizaje en alemán.
