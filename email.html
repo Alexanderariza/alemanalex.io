@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+
+    
+    <title>AlemAlex - Email Builder</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .category-container {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            cursor: pointer;
+            width: 100%;
+            max-width: 250px;
+        }
+
+        .game-container {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .word-bank {
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .word-bank .word {
+            padding: 8px 12px;
+            background: #f1f1f1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .word-bank .word:hover {
+            background: #ddd;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #clearButton {
+            background-color: #f44336; /* Rojo para el botón de limpiar */
+        }
+
+        #clearButton:hover {
+            background-color: #e53935;
+        }
+
+        @media (max-width: 768px) {
+            h1, h2 {
+                font-size: 24px;
+            }
+
+            select {
+                max-width: 100%;
+                font-size: 14px;
+            }
+
+            textarea {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="is-preload">
+    <!-- Wrapper -->
+  <div id="wrapper">
+                      <!-- Header -->
+              <header id="header">
+                <div class="inner">
+      
+                  <!-- Logo -->
+                    <a href="index.html" class="logo">
+                      <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+                    </a>
+      
+                  <!-- Nav -->
+                    <nav>
+                      <ul>
+                        <li><a href="#menu">Menu</a></li>
+                      </ul>
+                    </nav>
+      
+                </div>
+              </header>
+          <!-- Menu -->
+          <nav id="menu">
+            <h2>Menu</h2>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="gramar.html">Gramática para Dummis</a></li>
+              <li><a href="vocal.html">Vocabulario básico</a></li>
+              <li><a href="lesen.html">Escuchar y Leer</a></li>
+              <li><a href="test.html">Test & Treiner</a></li>
+            </ul>
+          </nav>
+   <!-- Main -->
+   <div id="main">
+    <div class="inner">
+      <hr />
+
+
+    <h1>AlemAlex - Email Builder</h1>
+    <h2>Wählen Sie eine Kategorie, um zu beginnen:</h2>
+
+    <!-- Contenedor de selección de categorías -->
+    <div class="category-container">
+        <select id="categorySelect">
+            <option value="1">1. Grundlegende Einführung</option>
+            <option value="2">2. Einladung</option>
+            <option value="3">3. Bestätigung eines Termins</option>
+            <option value="4">4. Formelle Beschwerde</option>
+            <option value="5">5. Dankesnachricht</option>
+            <option value="6">6. Professionelle E-Mails</option>
+        </select>
+    </div>
+
+    <!-- Contenedor del juego -->
+    <div id="gameContainer" class="game-container">
+        <h2 id="gameTitle">Kategorietitel</h2>
+        <p id="instructions">Spezifische Anweisungen für diese Kategorie.</p>
+
+        <!-- Editor de texto -->
+        <textarea id="emailContent" placeholder="Schreiben Sie hier Ihre E-Mail..."></textarea>
+
+        <!-- Banco de palabras -->
+        <div class="word-bank">
+            <div class="word">Beispiel</div>
+            <!-- Palabras generadas dinámicamente -->
+        </div>
+
+        <!-- Botón Verificar -->
+        <button id="checkButton">Überprüfen</button>
+        <!-- Botón Limpiar -->
+        <button id="clearButton">Bereinigen / Wiederholen</button>
+
+        <!-- Resultado -->
+        <div id="result" class="result"></div>
+    </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+              <ul class="copyright">
+                <li>&copy; AlemAlex. All rights reserved</li>
+                <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+              </ul>
+            </div>
+          </footer>
+
+    <script>
+        const categories = {
+            1: {
+                title: "Grundlegende Einführung",
+                instructions: "Erstellen Sie eine einfache E-Mail, in der Sie 'Hallo' sagen und eine Antwort bitten.",
+                words: ["Hallo", "Wie", "geht", "es", "Ihnen?", "Antwort", "Bitte", "danke"]
+            },
+            2: {
+                title: "Einladung",
+                instructions: "Schreiben Sie eine E-Mail, in der Sie einen Freund zu einem Treffen einladen.",
+                words: ["Einladung", "Hallo", "Freund", "Wir", "treffen", "uns", "morgen", "Uhrzeit", "Ort"]
+            },
+            3: {
+                title: "Bestätigung eines Termins",
+                instructions: "Bestätigen Sie einen Termin mit einem Arzt.",
+                words: ["Termin", "Bestätigung", "Datum", "Zeit", "Danke", "Mit freundlichen Grüßen"]
+            },
+            4: {
+                title: "Formelle Beschwerde",
+                instructions: "Schreiben Sie eine formelle Beschwerde über ein Problem.",
+                words: ["Problem", "Lösung", "Sehr geehrte Damen und Herren", "bitte", "antworten", "bald"]
+            },
+            5: {
+                title: "Dankesnachricht",
+                instructions: "Bedanken Sie sich für ein Geschenk oder einen erhaltenen Gefallen.",
+                words: ["Dankeschön", "Ich", "bin", "dankbar", "für", "das", "Geschenk", "liebe Grüße"]
+            },
+            6: {
+                title: "Professionelle E-Mails",
+                instructions: "Schreiben Sie eine professionelle E-Mail, in der Sie um Informationen bitten.",
+                words: ["Information", "Bitte", "Dokumente", "Mit freundlichen Grüßen", "Vielen Dank"]
+            }
+        };
+
+        const categorySelect = document.getElementById("categorySelect");
+        const gameContainer = document.getElementById("gameContainer");
+        const emailContent = document.getElementById("emailContent");
+        const wordBank = document.querySelector(".word-bank");
+        const checkButton = document.getElementById("checkButton");
+        const clearButton = document.getElementById("clearButton");
+        const result = document.getElementById("result");
+
+        categorySelect.addEventListener("change", () => {
+            const level = categorySelect.value;
+            const category = categories[level];
+
+            document.getElementById("gameTitle").textContent = category.title;
+            document.getElementById("instructions").textContent = category.instructions;
+            wordBank.innerHTML = "";
+            category.words.forEach(word => {
+                const wordElement = document.createElement("div");
+                wordElement.className = "word";
+                wordElement.textContent = word;
+                wordBank.appendChild(wordElement);
+            });
+            gameContainer.style.display = "block";
+            emailContent.value = "";
+            result.textContent = "";
+        });
+
+        wordBank.addEventListener("click", event => {
+            if (event.target.classList.contains("word")) {
+                emailContent.value += event.target.textContent + " ";
+            }
+        });
+
+        checkButton.addEventListener("click", () => {
+            const content = emailContent.value.trim();
+            if (content.length > 10) {
+                result.textContent = "Gut gemacht! Ihre E-Mail ist akzeptabel.";
+                result.style.color = "green";
+            } else {
+                result.textContent = "Versuchen Sie, mehr Details in Ihre E-Mail hinzuzufügen.";
+                result.style.color = "red";
+            }
+        });
+
+        // Función para limpiar el contenido y reiniciar el juego
+        clearButton.addEventListener("click", () => {
+            emailContent.value = "";
+            result.textContent = "";
+            gameContainer.style.display = "none";
+        });
+    </script>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
