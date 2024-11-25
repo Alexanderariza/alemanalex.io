@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlemAlex - Präpositionen in 3D</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/controls/TransformControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            overflow: hidden;
+        }
+        h1, #instructions, select, #result, button {
+            position: absolute;
+            left: 10px;
+            z-index: 10;
+            color: #333;
+        }
+        h1 {
+            top: 10px;
+        }
+        #instructions {
+            top: 50px;
+            color: #555;
+        }
+        select {
+            top: 100px;
+            padding: 5px 10px;
+            font-size: 16px;
+        }
+        button {
+            top: 150px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            top: 200px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>AlemAlex - Präpositionen in 3D</h1>
+    <div id="instructions">
+        Bewegen Sie den Roboter entsprechend den Wechselpräpositionen:
+        «in», «auf», «an», «neben», «zwischen», «hinter», «vor», «unter» und «über».
+    </div>
+    <select id="prepositionSelect">
+        <option value="auf">auf</option>
+        <option value="unter">unter</option>
+        <option value="neben">neben</option>
+        <option value="zwischen">zwischen</option>
+        <option value="in">in</option>
+        <option value="hinter">hinter</option>
+        <option value="vor">vor</option>
+        <option value="über">über</option>
+    </select>
+    <button id="verifyButton">Überprüfen</button>
+    <div id="result"></div>
+
+    <script>
+        // Escena, cámara y renderizador
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Controles de órbita
+        const orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+        camera.position.set(0, 5, 15);
+        orbitControls.update();
+
+        // Luz
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(5, 10, 7.5).normalize();
+        scene.add(directionalLight);
+
+        // Plano
+        const planeGeometry = new THREE.PlaneGeometry(20, 20);
+        const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc, side: THREE.DoubleSide });
+        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.rotation.x = -Math.PI / 2;
+        scene.add(plane);
+
+        // Cubos
+        const cube1Geometry = new THREE.BoxGeometry(2, 2, 2);
+        const cube1Material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+        const cube1 = new THREE.Mesh(cube1Geometry, cube1Material);
+        cube1.position.set(-4, 1, 0);
+        scene.add(cube1);
+
+        const cube2Geometry = new THREE.BoxGeometry(3, 3, 3);
+        const cube2Material = new THREE.MeshStandardMaterial({
+            color: 0x0000ff,
+            wireframe: true,
+        });
+        const cube2 = new THREE.Mesh(cube2Geometry, cube2Material);
+        cube2.position.set(4, 1.5, 0);
+        scene.add(cube2);
+
+        // Robot
+        let robot;
+        const loader = new THREE.GLTFLoader();
+        loader.load('https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', (gltf) => {
+            robot = gltf.scene;
+            robot.scale.set(0.7, 0.7, 0.7);
+            robot.position.set(0, 0, 0);
+            scene.add(robot);
+
+            // Controles de transformación
+            const transformControls = new THREE.TransformControls(camera, renderer.domElement);
+            transformControls.attach(robot);
+            scene.add(transformControls);
+
+            transformControls.addEventListener('dragging-changed', (event) => {
+                orbitControls.enabled = !event.value;
+            });
+
+            // Verificar posición
+            document.getElementById('verifyButton').addEventListener('click', () => {
+                const preposition = document.getElementById('prepositionSelect').value;
+                const result = document.getElementById('result');
+                const checkPosition = (x, y, z) => {
+                    const xDiff = Math.abs(robot.position.x - x);
+                    const yDiff = Math.abs(robot.position.y - y);
+                    const zDiff = Math.abs(robot.position.z - z);
+                    return xDiff < 1 && yDiff < 1 && zDiff < 1;
+                };
+
+                if (preposition === 'auf' && checkPosition(cube1.position.x, cube1.position.y + 1.5, cube1.position.z)) {
+                    result.textContent = 'Richtig! Der Roboter ist auf dem grünen Würfel.';
+                    result.style.color = 'green';
+                } else if (preposition === 'unter' && checkPosition(cube1.position.x, 0.5, cube1.position.z)) {
+                    result.textContent = 'Richtig! Der Roboter ist unter dem grünen Würfel.';
+                    result.style.color = 'green';
+                } else if (preposition === 'neben' && checkPosition(cube2.position.x - 3, cube2.position.y, cube2.position.z)) {
+                    result.textContent = 'Richtig! Der Roboter ist neben dem blauen Würfel.';
+                    result.style.color = 'green';
+                } else if (preposition === 'in' && checkPosition(cube2.position.x, cube2.position.y, cube2.position.z)) {
+                    result.textContent = 'Richtig! Der Roboter ist in dem blauen Würfel.';
+                    result.style.color = 'green';
+                } else {
+                    result.textContent = 'Falsch! Überprüfen Sie Ihre Präposition.';
+                    result.style.color = 'red';
+                }
+            });
+        });
+
+        // Animación
+        function animate() {
+            requestAnimationFrame(animate);
+            orbitControls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Ajustar tamaño de ventana
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
