@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vokabeltest</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+            flex-wrap: wrap;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .image-container {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .table-container {
+            flex: 1;
+            max-width: 50%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        td, th {
+            padding: 10px;
+            text-align: center;
+        }
+
+        select {
+            width: 100%;
+            padding: 8px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .result-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result {
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .image-container, .table-container {
+                max-width: 100%;
+            }
+
+            .image-container img {
+                width: 100%;
+            }
+
+            button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body class="is-preload">
+
+    <div>
+        <h1>Aprende Alemán con GPT</h1>
+        <textarea id="input" placeholder="Escribe algo aquí..." rows="5"></textarea>
+        <button id="submit">Enviar</button>
+        <div id="output"></div>
+    </div>
+    
+    <!-- Scripts adicionales -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <!-- Script para integrar la API de OpenAI -->
+    <script>
+        async function getGermanLesson(prompt) {
+            try {
+// Cambiar la URL al endpoint de Netlify Function
+const response = await fetch('/.netlify/functions/openai?prompt=' + encodeURIComponent(prompt), {
+    method: 'GET',  // Usamos GET para pasar parámetros de búsqueda
+});
+
+
+                if (!response.ok) {
+                    console.error("Error al obtener datos de la API:", response.statusText);
+                    return "Lo siento, hubo un problema al conectarse con la API.";
+                }
+
+                const data = await response.json();
+                console.log(data); // Depuración para ver qué devuelve la API
+                return data.choices[0].message.content || "No se recibió respuesta esperada.";
+            } catch (error) {
+                console.error("Error en la solicitud:", error);
+                return "Hubo un error al procesar la solicitud.";
+            }
+        }
+
+        // Configura el botón para enviar datos
+        document.getElementById("submit").addEventListener("click", async () => {
+            const userPrompt = document.getElementById("input").value;
+
+            if (!userPrompt.trim()) {
+                document.getElementById("output").innerText = "Por favor, escribe algo antes de enviar.";
+                return;
+            }
+
+            // Muestra un mensaje de carga
+            document.getElementById("output").innerText = "Cargando respuesta...";
+
+            // Llama a la función para obtener la respuesta
+            const reply = await getGermanLesson(userPrompt);
+
+            // Muestra la respuesta en la página
+            document.getElementById("output").innerText = reply;
+        });
+    </script>
+
+</body>
+</html>
