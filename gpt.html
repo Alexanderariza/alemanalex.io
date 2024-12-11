@@ -131,10 +131,23 @@
     <script>
         async function getGermanLesson(prompt) {
             try {
-// Cambiar la URL al endpoint de Netlify Function
-const response = await fetch('/.netlify/functions/openai?prompt=' + encodeURIComponent(prompt), {
-    method: 'GET',  // Usamos GET para pasar parámetros de búsqueda
+const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${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}`
+    },
+    body: JSON.stringify({
+        model: "gpt-4",
+        messages: [
+            { role: "system", content: "Eres un profesor de alemán hablando en español." },
+            { role: "user", content: prompt }
+        ],
+        max_tokens: 100
+    })
 });
+
+
 
 
                 if (!response.ok) {
