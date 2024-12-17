@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lectura y Escucha en Alemán</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <style>
+        /* Contenedor del menú lateral y contenido principal */
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Menú lateral */
+        .menu {
+            width: 250px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #ddd;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .menu h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .menu button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .menu button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Contenido principal */
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .text-container {
+            padding: 20px;
+            background-color: #eef;
+            border-radius: 10px;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+
+        /* Estilo de los botones con iconos */
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .controls button {
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .controls button:hover {
+            background-color: #0056b3;
+        }
+
+        .questions {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+        <!-- Header -->
+        <header id="header">
+            <div class="inner">
+                <a href="index.html" class="logo">
+                    <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+                </a>
+                <nav>
+                    <ul>
+                        <li><a href="#menu">Menu</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Menu -->
+        <nav id="menu">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gramar.html">Gramática para Dummis</a></li>
+                <li><a href="vocal.html">Vocabulario básico</a></li>
+                <li><a href="lesen.html">Escuchar y Leer</a></li>
+                <li><a href="test.html">Test & Treiner</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container">
+            <!-- Menú lateral -->
+            <div class="menu">
+                <h2>Textos Disponibles</h2>
+                <button onclick="loadText('intro')">Intro</button>
+                <button onclick="loadText('job')">IGAC</button>
+                <button onclick="loadText('un')">ONU</button>
+                <button onclick="loadText('education')">Edu</button>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="content">
+                <h2>Leer y Escuchar en Alemán</h2>
+
+                <div class="text-container" id="text">
+                    <!-- Texto inicial predeterminado -->
+                    <span>Ich heiße Alexander Ariza. Ich bin kolumbianisch-spanisch und interessiere mich sehr für Geografie und Informationssysteme...</span>
+                </div>
+
+                <div class="controls">
+                    <!-- Botones con iconos -->
+                    <button onclick="playAudio()">
+                        <img src="https://img.icons8.com/ios/50/ffffff/play.png" alt="Play" width="20"/>
+                    </button>
+                    <button onclick="pauseAudio()">
+                        <img src="https://img.icons8.com/ios/50/ffffff/pause.png" alt="Pause" width="20"/>
+                    </button>
+                    <button onclick="resetAudio()">
+                        <img src="https://img.icons8.com/?size=100&id=1707&format=png&color=000000" alt="Reset" width="20"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer id="footer">
+            <div class="inner">
+                <ul class="copyright">
+                    <li>&copy; AlemAlex. All rights reserved</li>
+                    <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+                </ul>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Textos disponibles
+        const texts = {
+            intro: {
+                content: [
+                    "Mein Name ist Alexander Ariza. Ich bin Spanier, aber ich wurde in Kolumbien geboren.",
+                    "Ich habe Forstingenieurwesen studiert und einen Master-Abschluss in Kartografie, GIS und Fernerkundung. Außerdem habe ich einen Doktortitel in Geospatial Technologies.",
+                    "Im Jahr 2020 beendete ich meinen Postdoc-Aufenthalt als Gastwissenschaftler bei den Vereinten Nationen.",
+                    "Ich habe für IT-Beratungsunternehmen in Berlin als Ingenieur gearbeitet.",
+                    "Mein Traum ist es, an einem Forschungszentrum oder einer Universität zu arbeiten."
+                ]
+            },
+            job: {
+                content: [
+                    "In Kolumbien arbeitete ich im Instituto Geográfico, wo ich Direktor des Forschungszentrums war.",
+                    "Ich leitete viele nationale und internationale Projekte, wie die Einführung moderner Fernerkundungstechnologien und die Zusammenarbeit mit der Weltbank.",
+                    "Ein wichtiges Projekt war die Aktualisierung der nationalen Kartographie der Grenzen in den Karibikgebieten.",
+                    "Ich förderte die Nutzung der hyperspektralen Fernerkundung und half, das Spektroradiometrie-Labor zu gründen.",
+                    "Außerdem hatte ich die Möglichkeit, als Professor an verschiedenen Universitäten in Kolumbien und Spanien zu arbeiten."
+                ]
+            },
+            un: {
+                content: [
+                    "Ich arbeitete bei UN-SPIDER in Bonn, Deutschland, wo ich an der Entwicklung bewährter Verfahren für die Nutzung von Satellitendaten im Katastrophenmanagement beteiligt war.",
+                    "Wir haben auch ein System für die Entscheidungsfindung bei DSS-Feuern entwickelt.",
+                    "Ich war an der Analyse von Satellitenbildern zur Bekämpfung von Waldbränden in Afrika und Lateinamerika beteiligt.",
+                    "Zu den wichtigsten Projekten gehörte die Unterstützung bei Großbränden in Algerien, Chile, Argentinien und Guatemala, Überschwemmungen in Marokko, Honduras und Kolumbien sowie Erdrutsche in Mexiko.",
+                    "Während der COVID-Pandemie haben wir mit Unterstützung der argentinischen Raumfahrtbehörde CONAE virtuelle Schulungskurse entwickelt."
+                ]
+            },
+            education: {
+                content: [
+                    "Ich habe mein gesamtes Studium in Europa absolviert, von meinem Master bis zu meiner Promotion an der Universität Alcalá in Spanien.",
+                    "Während dieser Zeit habe ich auch in Kolumbien an Universitäten wie der UPTC und der Katholischen Universität von Manizales unterrichtet.",
+                    "Ich habe bei der Leitung und Betreuung mehrerer Master- und Doktorarbeiten mitgewirkt.",
+                    "Aber der eigentliche Erfolg für mich ist, dass ich eine Karriere aufgebaut habe, die Forschung, Lehre und Projekte mit sozialer Wirkung verbindet.",
+                    "Ich spreche Spanisch als Muttersprache, Englisch und ein wenig Polnisch, obwohl ich mich derzeit darauf konzentriere, mein Deutsch zu verbessern."
+                    ]
+            }
+        };
+
+        const textContainer = document.getElementById("text");
+
+        function loadText(textKey) {
+            const selectedText = texts[textKey];
+            textContainer.innerHTML = selectedText.content.map(line => `<span>${line}</span><br>`).join("");
+            resetAudio();
+        }
+
+        // Variables para controlar el audio
+        let speechUtterance;
+        let isSpeaking = false;
+
+        function playAudio() {
+            if (isSpeaking) return;
+            isSpeaking = true;
+            speechUtterance = new SpeechSynthesisUtterance();
+            speechUtterance.lang = "de-DE";
+            speechUtterance.text = Array.from(textContainer.querySelectorAll("span")).map(span => span.textContent).join(" ");
+            speechUtterance.onend = () => { isSpeaking = false; };
+            window.speechSynthesis.speak(speechUtterance);
+            highlightText();
+        }
+
+        function pauseAudio() {
+            window.speechSynthesis.pause();
+        }
+
+        function resetAudio() {
+            window.speechSynthesis.cancel();
+            resetHighlights();
+            isSpeaking = false;
+        }
+
+        function highlightText() {
+            let currentCharIndex = 0;
+            speechUtterance.onboundary = function(event) {
+                let charIndex = event.charIndex;
+                if (charIndex > currentCharIndex) {
+                    resetHighlights();
+                    currentCharIndex = charIndex;
+                    highlightWord(charIndex);
+                }
+            };
+        }
+
+        function highlightWord(charIndex) {
+            let accumulatedLength = 0;
+            const words = textContainer.querySelectorAll("span");
+            for (let word of words) {
+                accumulatedLength += word.textContent.length + 1; // Cuenta los espacios
+                if (charIndex < accumulatedLength) {
+                    word.classList.add("highlight");
+                    break;
+                }
+            }
+        }
+
+        function resetHighlights() {
+            textContainer.querySelectorAll("span").forEach(word => word.classList.remove("highlight"));
+        }
+    </script>
+</body>
+</html>
