@@ -1,0 +1,340 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Plantilla</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    /* Fondo para la cabecera */
+    #header {
+      background-image: url('images/fondo.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    /* Fondo para el cuerpo */
+    #main {
+      background-image: url('images/fondo2.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      padding: 2em;
+    }
+
+    /* Fondo semitransparente para el contenido */
+    #main .inner {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 2em;
+      border-radius: 10px;
+    }
+
+    /* Botón desplegable */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .dropdown button {
+      padding: 10px 20px;
+      background: #4682B4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .dropdown button:hover {
+      background: #5a9bd3;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 5px;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .game-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+      gap: 10px;
+      margin: 20px auto;
+      justify-content: center;
+      width: 90%;
+    }
+
+    .card {
+      width: 100%;
+      padding-top: 125%; /* Aspect ratio */
+      position: relative;
+      border-radius: 8px;
+      cursor: pointer;
+      transform: perspective(600px) rotateY(0deg);
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease-in-out; /* Animación suave */
+    }
+
+    .card .front, .card .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .card .front {
+      background-color: var(--card-front-color, #4682B4); /* Color dinámico */
+      color: white;
+      font-size: 20px;
+    }
+
+    .card .back {
+      background-color: var(--card-back-color, #87CEEB); /* Color dinámico */
+      color: #333;
+      transform: rotateY(180deg);
+      font-size: 16px;
+    }
+
+    .card .back em {
+      display: block;
+      margin-top: 5px;
+      font-style: italic;
+      color: #555;
+      font-size: 14px; /* Tamaño más pequeño para traducciones */
+    }
+
+    .card.flipped {
+      transform: perspective(600px) rotateY(180deg);
+    }
+
+    .card.matched {
+      visibility: hidden;
+    }
+
+    #feedback {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body class="is-preload">
+
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gramar.html">Gramática para Dummis</a></li>
+        <li><a href="vocal.html">Vocabulario básico</a></li>
+        <li><a href="lesen.html">Escuchar y Leer</a></li>
+        <li><a href="test.html">Test & Treiner</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+      <div class="inner">
+        <div class="dropdown">
+          <button>Seleccionar Nivel</button>
+          <div class="dropdown-content">
+            <a href="#" onclick="loadLevel(1)">Nivel 1</a>
+            <a href="#" onclick="loadLevel(2)">Nivel 2</a>
+          </div>
+        </div>
+        <h2>Juego de Emparejar Antónimos</h2>
+        <div class="game-container" id="game-container"></div>
+        <p id="feedback"></p>
+      </div>
+    </div>
+
+    <!-- Sonidos -->
+    <audio id="sound-click" src="clip.mp3"></audio>
+    <audio id="sound-correct" src="correct.mp3"></audio>
+    <audio id="sound-incorrect" src="incorrect.mp3"></audio>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="copyright">
+          <li>&copy; AlemAlex. All rights reserved</li>
+          <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    const levels = {
+      1: {
+        cards: [
+          { word: "groß", translation: "(grande)", antonym: "klein", antonymTranslation: "(pequeño)" },
+          { word: "heiß", translation: "(caliente)", antonym: "kalt", antonymTranslation: "(frío)" },
+          { word: "hell", translation: "(claro)", antonym: "dunkel", antonymTranslation: "(oscuro)" },
+          { word: "schnell", translation: "(rápido)", antonym: "langsam", antonymTranslation: "(lento)" },
+          { word: "glücklich", translation: "(feliz)", antonym: "traurig", antonymTranslation: "(triste)" },
+        ],
+        colors: { front: "#4682B4", back: "#87CEEB" },
+      },
+      2: {
+        cards: [
+          { word: "sauber", translation: "(limpio)", antonym: "schmutzig", antonymTranslation: "(sucio)" },
+          { word: "leicht", translation: "(ligero)", antonym: "schwer", antonymTranslation: "(pesado)" },
+          { word: "sicher", translation: "(seguro)", antonym: "gefährlich", antonymTranslation: "(peligroso)" },
+          { word: "neu", translation: "(nuevo)", antonym: "alt", antonymTranslation: "(viejo)" },
+          { word: "schnell", translation: "(rápido)", antonym: "langsam", antonymTranslation: "(lento)" },
+        ],
+        colors: { front: "#6B8E23", back: "#98FB98" },
+      },
+    };
+
+    function loadLevel(level) {
+      const { cards, colors } = levels[level];
+      document.documentElement.style.setProperty("--card-front-color", colors.front);
+      document.documentElement.style.setProperty("--card-back-color", colors.back);
+
+      const gameContainer = document.getElementById("game-container");
+      gameContainer.innerHTML = "";
+
+      const deck = [];
+      cards.forEach(pair => {
+        deck.push({ text: pair.word, translation: pair.translation, pair: pair.antonym });
+        deck.push({ text: pair.antonym, translation: pair.antonymTranslation, pair: pair.word });
+      });
+
+      deck.sort(() => Math.random() - 0.5);
+
+      deck.forEach(card => {
+        const cardElement = document.createElement("div");
+        cardElement.classList.add("card");
+        cardElement.setAttribute("data-pair", card.pair);
+
+        const front = document.createElement("div");
+        front.classList.add("front");
+        front.textContent = "?";
+
+        const back = document.createElement("div");
+        back.classList.add("back");
+        back.innerHTML = `${card.text}<em>${card.translation}</em>`;
+
+        cardElement.appendChild(front);
+        cardElement.appendChild(back);
+        gameContainer.appendChild(cardElement);
+
+        cardElement.addEventListener("click", flipCard);
+      });
+    }
+
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
+    function flipCard(event) {
+      if (lockBoard) return;
+
+      const card = event.currentTarget;
+      if (card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+      const sound = document.getElementById("sound-click");
+      sound.currentTime = 0;
+      sound.play();
+
+      card.classList.add("flipped");
+
+      if (!firstCard) {
+        firstCard = card;
+      } else {
+        secondCard = card;
+        checkForMatch();
+      }
+    }
+
+    function checkForMatch() {
+      lockBoard = true;
+
+      const firstPair = firstCard.getAttribute("data-pair");
+      const secondText = secondCard.querySelector(".back").textContent.split("<em>")[0].trim();
+
+      if (firstPair === secondText) {
+        const sound = document.getElementById("sound-correct");
+        sound.currentTime = 0;
+        sound.play();
+
+        setTimeout(() => {
+          firstCard.classList.add("matched");
+          secondCard.classList.add("matched");
+          resetBoard();
+        }, 1000);
+      } else {
+        const sound = document.getElementById("sound-incorrect");
+        sound.currentTime = 0;
+        sound.play();
+
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          resetBoard();
+        }, 1000);
+      }
+    }
+
+    function resetBoard() {
+      [firstCard, secondCard] = [null, null];
+      lockBoard = false;
+    }
+
+    // Cargar el Nivel 1 por defecto
+    loadLevel(1);
+  </script>
+</body>
+</html>
