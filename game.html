@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <title>Plantilla</title>
   <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
     /* Fondo para la cabecera */
     #header {
@@ -80,7 +81,7 @@
 
     .game-container {
       display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 4 columnas */
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin: 20px auto;
       justify-content: center;
@@ -89,13 +90,14 @@
 
     .card {
       width: 100%;
-      padding-top: 125%; /* Aspect ratio */
+      padding-top: 125%;
       position: relative;
       border-radius: 8px;
       cursor: pointer;
       transform: perspective(600px) rotateY(0deg);
       transform-style: preserve-3d;
-      transition: transform 0.6s ease-in-out; /* Animación suave */
+      transition: transform 0.6s ease-in-out;
+      animation: flip-in 0.6s ease-in-out forwards;
     }
 
     .card .front, .card .back {
@@ -116,13 +118,13 @@
     }
 
     .card .front {
-      background-color: var(--card-front-color, #4682B4); /* Color dinámico */
+      background-color: var(--card-front-color, #4682B4);
       color: white;
       font-size: 20px;
     }
 
     .card .back {
-      background-color: var(--card-back-color, #87CEEB); /* Color dinámico */
+      background-color: var(--card-back-color, #87CEEB);
       color: #333;
       transform: rotateY(180deg);
       font-size: 16px;
@@ -133,15 +135,37 @@
       margin-top: 5px;
       font-style: italic;
       color: #555;
-      font-size: 14px; /* Tamaño más pequeño para traducciones */
+      font-size: 14px;
     }
 
     .card.flipped {
       transform: perspective(600px) rotateY(180deg);
+      animation: flip-out 0.6s ease-in-out forwards;
     }
 
     .card.matched {
       visibility: hidden;
+      animation: fade-out 0.6s ease-in-out forwards;
+    }
+
+    .animate__animated.animate__fadeOut {
+        visibility: hidden;
+    }
+
+
+    @keyframes flip-in {
+      from { transform: perspective(600px) rotateY(0deg); }
+      to { transform: perspective(600px) rotateY(180deg); }
+    }
+
+    @keyframes flip-out {
+      from { transform: perspective(600px) rotateY(180deg); }
+      to { transform: perspective(600px) rotateY(360deg); }
+    }
+
+    @keyframes fade-out {
+      from { opacity: 1; }
+      to { opacity: 0; transform: translateY(-20px); }
     }
 
     #feedback {
@@ -198,15 +222,15 @@
     </div>
 
     <!-- Sonidos -->
-    <audio id="sound-click" src="clip.mp3"></audio>
-    <audio id="sound-correct" src="correct.mp3"></audio>
-    <audio id="sound-incorrect" src="incorrect.mp3"></audio>
+    <audio id="sound-click" src="sounds/clip.mp3"></audio>
+    <audio id="sound-correct" src="sounds/correct.mp3"></audio>
+    <audio id="sound-incorrect" src="sounds/incorrect.mp3"></audio>
 
     <!-- Footer -->
     <footer id="footer">
       <div class="inner">
         <ul class="copyright">
-          <li>&copy; AlemAlex. All rights reserved</li>
+          <li>© AlemAlex. All rights reserved</li>
           <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
         </ul>
       </div>
@@ -311,8 +335,8 @@
         sound.play();
 
         setTimeout(() => {
-          firstCard.classList.add("matched");
-          secondCard.classList.add("matched");
+          firstCard.classList.add("matched", "animate__animated", "animate__fadeOut");
+          secondCard.classList.add("matched", "animate__animated", "animate__fadeOut");
           resetBoard();
         }, 1000);
       } else {
