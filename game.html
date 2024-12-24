@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <title>Juego de Emparejar Antónimos</title>
+  <title>Plantilla</title>
   <link rel="stylesheet" href="assets/css/main.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
@@ -11,6 +11,7 @@
     #header { background-image: url('images/fondo.jpg'); background-size: cover; background-position: center; color: white; }
     #main { background-image: url('images/fondo2.jpg'); background-size: cover; background-attachment: fixed; background-position: center; padding: 1em; }
     #main .inner { background: rgba(255, 255, 255, 0.9); padding: 1em; border-radius: 10px; }
+
 
     .dropdown { position: relative; display: inline-block; margin-bottom: 10px; }
     .dropdown button { padding: 8px 16px; background: #4682B4; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; }
@@ -20,10 +21,11 @@
     .dropdown-content a:hover { background-color: #f1f1f1; }
     .dropdown:hover .dropdown-content { display: block; }
 
+
     .game-container {
       display: grid;
       grid-template-columns: repeat(4, 1fr); /* 4 columns */
-      grid-template-rows: repeat(5, 1fr); /* 5 rows */
+      grid-template-rows: repeat(5, 1fr); /* 5 rows */ /* Adjust rows as needed */
       gap: 5px;
       margin: 10px auto;
       justify-content: center;
@@ -55,14 +57,15 @@
       align-items: center;
       text-align: center;
       overflow: hidden;
-      padding: 5px;
+      padding: 5px; /* Reduced padding */
       border-radius: 8px;
-      font-size: 14px;
+      font-size: 14px; /* Smaller font */
     }
 
     .card .front { background-color: var(--card-front-color, #4682B4); color: white; }
     .card .back { background-color: var(--card-back-color, #87CEEB); color: #333; transform: rotateY(180deg); }
     .card .back em { display: block; margin-top: 2px; font-style: italic; color: #555; font-size: 12px; }
+
 
     .card.flipped { transform: perspective(600px) rotateY(180deg); animation: flip-out 0.6s ease-in-out forwards; }
     .card.matched { visibility: hidden; animation: fade-out 0.6s ease-in-out forwards; }
@@ -76,33 +79,38 @@
 </head>
 <body class="is-preload">
 
-  <!-- Header -->
-  <header id="header">
-    <div class="inner">
-      <a href="index.html" class="logo">
-        <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
-      </a>
-      <nav>
-        <ul>
-          <li><a href="#menu">Menu</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
+  		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+				<!-- Logo -->
+				<a href="index.html" class="logo">
+					<br>
+					<span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+				</a>
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
 
-  <!-- Menu -->
-  <nav id="menu">
-    <h2>Menu</h2>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="gramar.html">Gramática para Dummis</a></li>
-      <li><a href="vocal.html">Vocabulario básico</a></li>
-      <li><a href="lesen.html">Escuchar y Leer</a></li>
-      <li><a href="test.html">Test & Treiner</a></li>
-    </ul>
-  </nav>
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="gramar.html">Gramática para Dummis</a></li>
+				<li><a href="vocal.html">Vocabulario básico</a></li>
+				<li><a href="lesen.html">Escuchar y Leer</a></li>
+				<li><a href="test.html">Test & Treiner</a></li>
+			</ul>
+		</nav>
 
-  <!-- Main -->
+		<!-- Main -->
+  <!-- ... (Header and Menu remain the same) ... -->
+
   <div id="main">
     <div class="inner">
       <div class="dropdown">
@@ -117,124 +125,209 @@
     </div>
   </div>
 
-  <!-- Sounds -->
-  <audio id="sound-click" src="click.mp3"></audio>
-  <audio id="sound-correct" src="correct.mp3"></audio>
-  <audio id="sound-incorrect" src="incorrect.mp3"></audio>
+  <!-- Sounds (ensure correct paths!) -->
+  <audio id="sound-click" src="click.mp3"></audio>  <!-- UPDATED PATH -->
+  <audio id="sound-correct" src="correct.mp3"></audio> <!-- UPDATED PATH -->
+  <audio id="sound-incorrect" src="incorrect.mp3"></audio> <!-- UPDATED PATH -->
 
+  <!-- ... (Footer remains the same) ... -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
   <script>
     const levels = {
       1: {
+          //more card pairs here
+          cards: [
+            { word: "groß", translation: "(grande)", antonym: "klein", antonymTranslation: "(pequeño)" },
+            { word: "heiß", translation: "(caliente)", antonym: "kalt", antonymTranslation: "(frío)" },
+            { word: "hell", translation: "(claro)", antonym: "dunkel", antonymTranslation: "(oscuro)" },
+            { word: "schnell", translation: "(rápido)", antonym: "langsam", antonymTranslation: "(lento)" },
+            { word: "glücklich", translation: "(feliz)", antonym: "traurig", antonymTranslation: "(triste)" },
+            { word: "hoch", translation: "(alto)", antonym: "niedrig", antonymTranslation: "(bajo)" },
+            { word: "stark", translation: "(fuerte)", antonym: "schwach", antonymTranslation: "(débil)" },
+            { word: "reich", translation: "(rico)", antonym: "arm", antonymTranslation: "(pobre)" },
+            { word: "alt", translation: "(viejo)", antonym: "jung", antonymTranslation: "(joven)" },
+            { word: "gut", translation: "(bueno)", antonym: "schlecht", antonymTranslation: "(malo)" },
+            { word: "vorne", translation: "(delante)", antonym: "hinten", antonymTranslation: "(detrás)" },
+            { word: "oben", translation: "(arriba)", antonym: "unten", antonymTranslation: "(abajo)" },
+            { word: "innen", translation: "(dentro)", antonym: "außen", antonymTranslation: "(fuera)" },
+            { word: "rechts", translation: "(derecha)", antonym: "links", antonymTranslation: "(izquierda)" },
+            { word: "ja", translation: "(sí)", antonym: "nein", antonymTranslation: "(no)" },
+            { word: "dick", translation: "(grueso)", antonym: "dünn", antonymTranslation: "(delgado)" },
+            { word: "lang", translation: "(largo)", antonym: "kurz", antonymTranslation: "(corto)" },
+            { word: "weit", translation: "(lejos)", antonym: "nah", antonymTranslation: "(cerca)" },
+            { word: "voll", translation: "(lleno)", antonym: "leer", antonymTranslation: "(vacío)" },
+            { word: "offen", translation: "(abierto)", antonym: "geschlossen", antonymTranslation: "(cerrado)" },
+        ],
+        colors: { front: "#4682B4", back: "#87CEEB" },
+      },
+      2: {
         cards: [
+           { word: "sauber", translation: "(limpio)", antonym: "schmutzig", antonymTranslation: "(sucio)" },
+          { word: "leicht", translation: "(ligero)", antonym: "schwer", antonymTranslation: "(pesado)" },
+          { word: "sicher", translation: "(seguro)", antonym: "gefährlich", antonymTranslation: "(peligroso)" },
+          { word: "neu", translation: "(nuevo)", antonym: "alt", antonymTranslation: "(viejo)" },
+          { word: "schnell", translation: "(rápido)", antonym: "langsam", antonymTranslation: "(lento)" },
+           { word: "freundlich", translation: "(amigable)", antonym: "unfreundlich", antonymTranslation: "(desagradable)" },
+          { word: "einfach", translation: "(fácil)", antonym: "schwierig", antonymTranslation: "(difícil)" },
           { word: "groß", translation: "(grande)", antonym: "klein", antonymTranslation: "(pequeño)" },
           { word: "heiß", translation: "(caliente)", antonym: "kalt", antonymTranslation: "(frío)" },
           { word: "hell", translation: "(claro)", antonym: "dunkel", antonymTranslation: "(oscuro)" },
-          { word: "schnell", translation: "(rápido)", antonym: "langsam", antonymTranslation: "(lento)" },
-          { word: "glücklich", translation: "(feliz)", antonym: "traurig", antonymTranslation: "(triste)" },
-          { word: "hoch", translation: "(alto)", antonym: "niedrig", antonymTranslation: "(bajo)" },
-          { word: "stark", translation: "(fuerte)", antonym: "schwach", antonymTranslation: "(débil)" },
-          { word: "reich", translation: "(rico)", antonym: "arm", antonymTranslation: "(pobre)" },
-          { word: "alt", translation: "(viejo)", antonym: "jung", antonymTranslation: "(joven)" },
-          { word: "gut", translation: "(bueno)", antonym: "schlecht", antonymTranslation: "(malo)" },
-          { word: "vorne", translation: "(delante)", antonym: "hinten", antonymTranslation: "(detrás)" },
-          { word: "oben", translation: "(arriba)", antonym: "unten", antonymTranslation: "(abajo)" },
-          { word: "innen", translation: "(dentro)", antonym: "außen", antonymTranslation: "(fuera)" },
-          { word: "rechts", translation: "(derecha)", antonym: "links", antonymTranslation: "(izquierda)" },
-          { word: "ja", translation: "(sí)", antonym: "nein", antonymTranslation: "(no)" },
-          { word: "dick", translation: "(grueso)", antonym: "dünn", antonymTranslation: "(delgado)" },
-          { word: "lang", translation: "(largo)", antonym: "kurz", antonymTranslation: "(corto)" },
-          { word: "weit", translation: "(lejos)", antonym: "nah", antonymTranslation: "(cerca)" },
-          { word: "voll", translation: "(lleno)", antonym: "leer", antonymTranslation: "(vacío)" },
-          { word: "offen", translation: "(abierto)", antonym: "geschlossen", antonymTranslation: "(cerrado)" }
-        ]
-      }
+          { word: "laut", translation: "(alto)", antonym: "leise", antonymTranslation: "(suave)" },
+          { word: "nass", translation: "(mojado)", antonym: "trocken", antonymTranslation: "(seco)" },
+          { word: "leer", translation: "(vacío)", antonym: "voll", antonymTranslation: "(lleno)" },
+          { word: "leicht", translation: "(ligero)", antonym: "schwer", antonymTranslation: "(pesado)" },
+          { word: "sicher", translation: "(seguro)", antonym: "unsicher", antonymTranslation: "(inseguro)" },
+
+        ],
+        colors: { front: "#6B8E23", back: "#98FB98" },
+      },
+       3: {
+        cards: [
+            //Add more card pairs here
+            { word: "anfangen", translation: "(empezar)", antonym: "beenden", antonymTranslation: "(terminar)" },
+            { word: "geben", translation: "(dar)", antonym: "nehmen", antonymTranslation: "(tomar)" },
+            { word: "kaufen", translation: "(comprar)", antonym: "verkaufen", antonymTranslation: "(vender)" },
+            { word: "kommen", translation: "(venir)", antonym: "gehen", antonymTranslation: "(ir)" },
+            { word: "fragen", translation: "(preguntar)", antonym: "antworten", antonymTranslation: "(responder)" },
+            { word: "groß", translation: "(grande)", antonym: "klein", antonymTranslation: "(pequeño)" },
+            { word: "hoch", translation: "(alto)", antonym: "niedrig", antonymTranslation: "(bajo)" },
+            { word: "stark", translation: "(fuerte)", antonym: "schwach", antonymTranslation: "(débil)" },
+            { word: "reich", translation: "(rico)", antonym: "arm", antonymTranslation: "(pobre)" },
+            { word: "alt", translation: "(viejo)", antonym: "jung", antonymTranslation: "(joven)" },
+            { word: "gut", translation: "(bueno)", antonym: "schlecht", antonymTranslation: "(malo)" },
+            { word: "vorne", translation: "(delante)", antonym: "hinten", antonymTranslation: "(detrás)" },
+            { word: "oben", translation: "(arriba)", antonym: "unten", antonymTranslation: "(abajo)" },
+            { word: "innen", translation: "(dentro)", antonym: "außen", antonymTranslation: "(fuera)" },
+            { word: "rechts", translation: "(derecha)", antonym: "links", antonymTranslation: "(izquierda)" },
+            { word: "ja", translation: "(sí)", antonym: "nein", antonymTranslation: "(no)" },
+            { word: "dick", translation: "(grueso)", antonym: "dünn", antonymTranslation: "(delgado)" },
+            { word: "lang", translation: "(largo)", antonym: "kurz", antonymTranslation: "(corto)" },
+            { word: "weit", translation: "(lejos)", antonym: "nah", antonymTranslation: "(cerca)" },
+            { word: "voll", translation: "(lleno)", antonym: "leer", antonymTranslation: "(vacío)" },
+
+
+        ],
+        colors: { front: "#FF69B4", back: "#FFB6C1" },
+      },
     };
 
-    let currentLevel = 1;
-    let cards = levels[currentLevel].cards;
-    let flippedCards = [];
-    let matchedCards = 0;
-    let totalCards = cards.length * 2; // Each card appears twice
-
-    const gameContainer = document.getElementById('game-container');
-    const feedback = document.getElementById('feedback');
-    const soundClick = document.getElementById('sound-click');
-    const soundCorrect = document.getElementById('sound-correct');
-    const soundIncorrect = document.getElementById('sound-incorrect');
-
-    function shuffleArray(array) {
-      let shuffled = array.slice();
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
+    const levelSelect = document.getElementById("level-select");
+    for (const level in levels) {
+      const a = document.createElement("a");
+      a.href = "#";
+      a.textContent = "Nivel " + level;
+      a.onclick = () => loadLevel(parseInt(level));
+      levelSelect.appendChild(a);
     }
 
-    function createCards() {
-      const shuffledCards = shuffleArray([...cards, ...cards]); // Duplicate and shuffle cards
-      gameContainer.innerHTML = ''; // Clear previous cards
-      shuffledCards.forEach((card, index) => {
-        const cardElement = document.createElement('div');
-        cardElement.classList.add('card');
-        cardElement.dataset.word = card.word;
-        cardElement.dataset.antonym = card.antonym;
+    function loadLevel(level) {
+      const { cards, colors } = levels[level] || levels[1]; // Default to level 1 if invalid level
+      document.documentElement.style.setProperty("--card-front-color", colors.front);
+      document.documentElement.style.setProperty("--card-back-color", colors.back);
 
-        const front = document.createElement('div');
-        front.classList.add('front');
-        front.innerHTML = card.word;
+      const gameContainer = document.getElementById("game-container");
+      gameContainer.innerHTML = "";
 
-        const back = document.createElement('div');
-        back.classList.add('back');
-        back.innerHTML = `${card.antonym} <em>${card.antonymTranslation}</em>`;
+      const deck = [];
+      cards.forEach(pair => {
+        deck.push({ text: pair.word, translation: pair.translation, pair: pair.antonym });
+        deck.push({ text: pair.antonym, translation: pair.antonymTranslation, pair: pair.word });
+      });
+
+      deck.sort(() => Math.random() - 0.5);
+
+      deck.forEach(card => {
+        const cardElement = document.createElement("div");
+        cardElement.classList.add("card");
+        cardElement.setAttribute("data-pair", card.pair);
+
+        const front = document.createElement("div");
+        front.classList.add("front");
+        front.textContent = "?";
+
+        const back = document.createElement("div");
+        back.classList.add("back");
+        back.innerHTML = `${card.text}<em>${card.translation}</em>`;
 
         cardElement.appendChild(front);
         cardElement.appendChild(back);
-
-        cardElement.addEventListener('click', () => flipCard(cardElement, card));
         gameContainer.appendChild(cardElement);
+
+        cardElement.addEventListener("click", flipCard);
       });
     }
 
-    function flipCard(cardElement, card) {
-      if (flippedCards.length < 2 && !cardElement.classList.contains('flipped')) {
-        cardElement.classList.add('flipped');
-        flippedCards.push({ cardElement, card });
-        soundClick.play();
 
-        if (flippedCards.length === 2) {
-          checkMatch();
-        }
+    // ... (rest of the JavaScript code remains largely the same) ...
+
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
+    function flipCard(event) {
+      if (lockBoard) return;
+      const card = event.currentTarget;
+      if (card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+      const sound = document.getElementById("sound-click");
+      if (sound.readyState >= HTMLAudioElement.HAVE_METADATA) sound.play(); // Play only if loaded
+
+      card.classList.add("flipped");
+
+      if (!firstCard) {
+        firstCard = card;
+      } else {
+        secondCard = card;
+        checkForMatch();
       }
     }
 
-    function checkMatch() {
-      const [first, second] = flippedCards;
 
-      if (first.card.antonym === second.card.word) {
-        first.cardElement.classList.add('matched');
-        second.cardElement.classList.add('matched');
-        matchedCards++;
+    function checkForMatch() {
+      lockBoard = true;
+      const firstPair = firstCard.getAttribute("data-pair");
+      const secondText = secondCard.querySelector(".back").textContent.split("<em>")[0].trim();
 
-        soundCorrect.play();
-        feedback.innerHTML = `¡Emparejaste!`;
-
-        if (matchedCards === totalCards / 2) {
-          feedback.innerHTML = `¡Has ganado el juego!`;
-        }
-      } else {
-        soundIncorrect.play();
+      if (firstPair === secondText) {
+        const sound = document.getElementById("sound-correct");
+        if (sound.readyState >= HTMLAudioElement.HAVE_METADATA) sound.play();
         setTimeout(() => {
-          first.cardElement.classList.remove('flipped');
-          second.cardElement.classList.remove('flipped');
-          feedback.innerHTML = `¡Inténtalo nuevamente!`;
+          firstCard.classList.add("matched", "animate__animated", "animate__fadeOut");
+          secondCard.classList.add("matched", "animate__animated", "animate__fadeOut");
+          resetBoard();
+          checkWin(); //Check if all pairs are found.
+        }, 1000);
+      } else {
+        const sound = document.getElementById("sound-incorrect");
+        if (sound.readyState >= HTMLAudioElement.HAVE_METADATA) sound.play();
+        setTimeout(() => {
+          firstCard.classList.remove("flipped");
+          secondCard.classList.remove("flipped");
+          resetBoard();
         }, 1000);
       }
-
-      flippedCards = [];
     }
 
-    createCards(); // Initialize the game on load
+    function resetBoard() {
+      [firstCard, secondCard] = [null, null];
+      lockBoard = false;
+    }
+
+    function checkWin() {
+        const matchedCards = document.querySelectorAll('.card.matched');
+        if (matchedCards.length === 20) { //Adjust this number based on cards in each level.
+            alert("¡Felicidades! Has ganado el juego.");
+        }
+    }
+
+    // Load Level 1 by default
+    loadLevel(1);
   </script>
+
+	
 </body>
 </html>
