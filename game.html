@@ -68,7 +68,7 @@
 
 
     .card.flipped { transform: perspective(600px) rotateY(180deg); animation: flip-out 0.6s ease-in-out forwards; }
-    .card.matched { visibility: hidden; animation: fade-out 0.6s ease-in-out forwards; }
+    .card.matched { visibility: hidden; animation: fade-out 1s ease-in-out forwards; }
 
     @keyframes flip-in { from { transform: perspective(600px) rotateY(0deg); } to { transform: perspective(600px) rotateY(180deg); } }
     @keyframes flip-out { from { transform: perspective(600px) rotateY(180deg); } to { transform: perspective(600px) rotateY(360deg); } }
@@ -138,6 +138,19 @@
 	<script src="assets/js/breakpoints.min.js"></script>
 	<script src="assets/js/util.js"></script>
 	<script src="assets/js/main.js"></script>
+
+  <script>
+    function verificarEmparejamiento(elemento1, elemento2) {
+      if (esCorrecto(elemento1, elemento2)) {
+          elemento1.style.display = 'none';
+          elemento2.style.display = 'none';
+          alert("¡Emparejamiento correcto!");
+      } else {
+          alert("Emparejamiento incorrecto. Intenta de nuevo.");
+      }
+    }
+  </script>
+  
 
 	
   <script>
@@ -210,128 +223,81 @@
             { word: "ja", translation: "(sí)", antonym: "nein", antonymTranslation: "(no)" },
             { word: "dick", translation: "(grueso)", antonym: "dünn", antonymTranslation: "(delgado)" },
             { word: "lang", translation: "(largo)", antonym: "kurz", antonymTranslation: "(corto)" },
-            { word: "weit", translation: "(lejos)", antonym: "nah", antonymTranslation: "(cerca)" },
-            { word: "voll", translation: "(lleno)", antonym: "leer", antonymTranslation: "(vacío)" },
-
-
-        ],
-        colors: { front: "#FF69B4", back: "#FFB6C1" },
+            { word: "weit", translation: "(lejos)", antonym: "nah", antonymTranslation: "(cerca)" },            
+            { word: "voll", translation: "(lleno)", antonym: "leer", antonymTranslation: "(vacío)" }
+          ]
       },
+      // Puedes agregar más niveles aquí
     };
 
-    const levelSelect = document.getElementById("level-select");
-    for (const level in levels) {
-      const a = document.createElement("a");
-      a.href = "#";
-      a.textContent = "Nivel " + level;
-      a.onclick = () => loadLevel(parseInt(level));
-      levelSelect.appendChild(a);
+    // Función para inicializar el juego
+    function initGame(level) {
+        const gameContainer = document.getElementById('game-container');
+        const feedback = document.getElementById('feedback');
+        gameContainer.innerHTML = ''; // Limpia el contenedor de juego
+        feedback.innerHTML = ''; // Limpia el mensaje de retroalimentación
+
+        const selectedCards = levels[level].cards;
+
+        // Mezclar las cartas
+        const shuffledCards = [...selectedCards, ...selectedCards.map(card => ({
+            word: card.antonym,
+            translation: card.antonymTranslation,
+            antonym: card.word,
+            antonymTranslation: card.translation
+        }))].sort(() => Math.random() - 0.5);
+
+        shuffledCards.forEach(card => {
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('card');
+            cardElement.innerHTML = `
+                <div class="front">${card.word}</div>
+                <div class="back">${card.translation}</div>
+            `;
+            cardElement.dataset.match = card.antonym;
+            cardElement.addEventListener('click', () => handleCardClick(cardElement));
+            gameContainer.appendChild(cardElement);
+        });
     }
-
-    function loadLevel(level) {
-      const { cards, colors } = levels[level] || levels[1]; // Default to level 1 if invalid level
-      document.documentElement.style.setProperty("--card-front-color", colors.front);
-      document.documentElement.style.setProperty("--card-back-color", colors.back);
-
-      const gameContainer = document.getElementById("game-container");
-      gameContainer.innerHTML = "";
-
-      const deck = [];
-      cards.forEach(pair => {
-        deck.push({ text: pair.word, translation: pair.translation, pair: pair.antonym });
-        deck.push({ text: pair.antonym, translation: pair.antonymTranslation, pair: pair.word });
-      });
-
-      deck.sort(() => Math.random() - 0.5);
-
-      deck.forEach(card => {
-        const cardElement = document.createElement("div");
-        cardElement.classList.add("card");
-        cardElement.setAttribute("data-pair", card.pair);
-
-        const front = document.createElement("div");
-        front.classList.add("front");
-        front.textContent = "?";
-
-        const back = document.createElement("div");
-        back.classList.add("back");
-        back.innerHTML = `${card.text}<em>${card.translation}</em>`;
-
-        cardElement.appendChild(front);
-        cardElement.appendChild(back);
-        gameContainer.appendChild(cardElement);
-
-        cardElement.addEventListener("click", flipCard);
-      });
-    }
-
-
-    // ... (rest of the JavaScript code remains largely the same) ...
 
     let firstCard = null;
-    let secondCard = null;
-    let lockBoard = false;
 
-    function flipCard(event) {
-      if (lockBoard) return;
-      const card = event.currentTarget;
-      if (card.classList.contains("flipped") || card.classList.contains("matched")) return;
+    function handleCardClick(cardElement) {
+        if (cardElement.classList.contains('flipped')) return;
 
-      const sound = document.getElementById("sound-click");
-      if (sound.readyState >= HTMLAudioElement.HAVE_METADATA) sound.play(); // Play only if loaded
+        cardElement.classList.add('flipped');
 
-      card.classList.add("flipped");
+        if (!firstCard) {
+            firstCard = cardElement;
+            return;
+        }
 
-      if (!firstCard) {
-        firstCard = card;
-      } else {
-        secondCard = card;
-        checkForMatch();
-      }
-    }
-
-
-    function checkForMatch() {
-      lockBoard = true;
-      const firstPair = firstCard.getAttribute("data-pair");
-      const secondText = secondCard.querySelector(".back").textContent.split("<em>")[0].trim();
-
-      if (firstPair === secondText) {
-        const sound = document.getElementById("sound-correct");
-        if (sound.readyState >= HTMLAudioElement.HAVE_METADATA) sound.play();
-        setTimeout(() => {
-          firstCard.classList.add("matched", "animate__animated", "animate__fadeOut");
-          secondCard.classList.add("matched", "animate__animated", "animate__fadeOut");
-          resetBoard();
-          checkWin(); //Check if all pairs are found.
-        }, 1000);
-      } else {
-        const sound = document.getElementById("sound-incorrect");
-        if (sound.readyState >= HTMLAudioElement.HAVE_METADATA) sound.play();
-        setTimeout(() => {
-          firstCard.classList.remove("flipped");
-          secondCard.classList.remove("flipped");
-          resetBoard();
-        }, 1000);
-      }
-    }
-
-    function resetBoard() {
-      [firstCard, secondCard] = [null, null];
-      lockBoard = false;
-    }
-
-    function checkWin() {
-        const matchedCards = document.querySelectorAll('.card.matched');
-        if (matchedCards.length === 20) { //Adjust this number based on cards in each level.
-            alert("¡Felicidades! Has ganado el juego.");
+        if (firstCard.dataset.match === cardElement.querySelector('.front').textContent) {
+            firstCard.classList.add('matched');
+            cardElement.classList.add('matched');
+            firstCard = null;
+            document.getElementById('sound-correct').play();
+            document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
+        } else {
+            setTimeout(() => {
+                firstCard.classList.remove('flipped');
+                cardElement.classList.remove('flipped');
+                firstCard = null;
+                document.getElementById('sound-incorrect').play();
+                document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
+            }, 1000);
         }
     }
 
-    // Load Level 1 by default
-    loadLevel(1);
+    // Población del menú de selección de nivel
+    const levelSelect = document.getElementById('level-select');
+    for (const [level, data] of Object.entries(levels)) {
+        const levelOption = document.createElement('a');
+        levelOption.href = "#";
+        levelOption.textContent = `Nivel ${level}`;
+        levelOption.addEventListener('click', () => initGame(level));
+        levelSelect.appendChild(levelOption);
+    }
   </script>
-
-	
 </body>
 </html>
