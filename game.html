@@ -264,47 +264,52 @@
 
     let firstCard = null;
 
-    function handleCardClick(cardElement) {
-        if (cardElement.classList.contains('flipped')) return;
+function handleCardClick(cardElement) {
+    if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
 
-        cardElement.classList.add('flipped');
+    cardElement.classList.add('flipped');
 
-        if (!firstCard) {
-            firstCard = cardElement;
-            return;
-        }
+    if (!firstCard) {
+        firstCard = cardElement;
+        return;
+    }
 
- // Verificar coincidencia basada en `data-match` y `data-translation`
-    if (
+    // Verificar coincidencia basada en `data-match` y `data-translation`
+    const isMatch =
         firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
-        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim()
-    ) {
-        // Coincidencia correcta
-        firstCard.classList.add('matched');
-        cardElement.classList.add('matched');
-        firstCard = null;
-        document.getElementById('sound-correct').play();
-        document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
-    } else {
-            setTimeout(() => {
-                firstCard.classList.remove('flipped');
-                cardElement.classList.remove('flipped');
-                firstCard = null;
-                document.getElementById('sound-incorrect').play();
-                document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-            }, 1000);
-        }
-    }
+        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim();
 
-    // Población del menú de selección de nivel
-    const levelSelect = document.getElementById('level-select');
-    for (const [level, data] of Object.entries(levels)) {
-        const levelOption = document.createElement('a');
-        levelOption.href = "#";
-        levelOption.textContent = `Nivel ${level}`;
-        levelOption.addEventListener('click', () => initGame(level));
-        levelSelect.appendChild(levelOption);
+    if (isMatch) {
+        // Coincidencia correcta: deja que se gire la segunda carta antes de desaparecer
+        setTimeout(() => {
+            firstCard.classList.add('matched');
+            cardElement.classList.add('matched');
+            firstCard = null;
+
+            // Retroalimentación y sonido
+            document.getElementById('sound-correct').play();
+            document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
+
+            // Opcional: Desaparecer después de un tiempo para que se pueda leer
+            setTimeout(() => {
+                firstCard.style.visibility = 'hidden';
+                cardElement.style.visibility = 'hidden';
+            }, 1500); // Tiempo extra para leer (1.5 segundos)
+        }, 500); // Tiempo para que la segunda carta gire (0.5 segundos)
+    } else {
+        // Coincidencia incorrecta: Voltear las cartas de nuevo
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            cardElement.classList.remove('flipped');
+            firstCard = null;
+
+            // Retroalimentación y sonido
+            document.getElementById('sound-incorrect').play();
+            document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
+        }, 1000);
     }
+}
+
   </script>
 </body>
 </html>
