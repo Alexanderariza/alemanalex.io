@@ -252,9 +252,11 @@
             cardElement.classList.add('card');
             cardElement.innerHTML = `
                 <div class="back">"?"</div>
-                <div class="front">${card.word}</div>
+                <div class="front">${card.word}<em>${card.translation}</em></div>
             `;
             cardElement.dataset.match = card.antonym;
+	    cardElement.dataset.translation = card.antonymTranslation;
+		
             cardElement.addEventListener('click', () => handleCardClick(cardElement));
             gameContainer.appendChild(cardElement);
         });
@@ -272,13 +274,18 @@
             return;
         }
 
-        if (firstCard.dataset.match === cardElement.querySelector('.front').textContent) {
-            firstCard.classList.add('matched');
-            cardElement.classList.add('matched');
-            firstCard = null;
-            document.getElementById('sound-correct').play();
-            document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
-        } else {
+ // Verificar coincidencia basada en `data-match` y `data-translation`
+    if (
+        firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
+        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim()
+    ) {
+        // Coincidencia correcta
+        firstCard.classList.add('matched');
+        cardElement.classList.add('matched');
+        firstCard = null;
+        document.getElementById('sound-correct').play();
+        document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
+    } else {
             setTimeout(() => {
                 firstCard.classList.remove('flipped');
                 cardElement.classList.remove('flipped');
