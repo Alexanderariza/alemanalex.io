@@ -264,46 +264,45 @@
     }
 
 
-	  let firstCard = null; // Para almacenar la primera carta seleccionada
+let firstCard = null; // Para almacenar la primera carta seleccionada
 
 function handleCardClick(event) {
-    // Prevenir que este clic afecte otros elementos
-    event.stopPropagation();
+    // Prevenir conflictos con otros elementos
+    event.stopImmediatePropagation();
 
     const cardElement = event.currentTarget;
 
-    // Evitar que se interactúe con cartas ya volteadas o emparejadas
+    // Evitar interacción con cartas ya volteadas o emparejadas
     if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
 
     cardElement.classList.add('flipped');
 
     if (!firstCard) {
-        // Almacenar la primera carta volteada
+        // Almacenar la primera carta seleccionada
         firstCard = cardElement;
         return;
     }
 
-    // Verificar si hay coincidencia
+    // Verificar si las cartas coinciden
     const isMatch =
-        firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
-        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim();
+        firstCard.dataset.match === cardElement.dataset.match &&
+        firstCard.dataset.translation === cardElement.dataset.translation;
 
     if (isMatch) {
         // Coincidencia correcta
         setTimeout(() => {
-            // Marcar ambas cartas como emparejadas
             firstCard.classList.add('matched');
             cardElement.classList.add('matched');
 
-            // Retraso antes de ocultar las cartas
+            // Opcional: ocultar después de un tiempo
             setTimeout(() => {
                 firstCard.style.visibility = 'hidden';
                 cardElement.style.visibility = 'hidden';
-                firstCard = null; // Reiniciar para la próxima jugada
-            }, 1500); // Tiempo para que las cartas permanezcan visibles
-        }, 500); // Tiempo para que gire la segunda carta
+                firstCard = null;
+            }, 1500); // Tiempo extra para que se vean las cartas
+        }, 500); // Tiempo para girar la segunda carta
 
-        // Retroalimentación y sonido
+        // Feedback y sonido
         document.getElementById('sound-correct').play();
         document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
     } else {
@@ -311,20 +310,19 @@ function handleCardClick(event) {
         setTimeout(() => {
             firstCard.classList.remove('flipped');
             cardElement.classList.remove('flipped');
-            firstCard = null; // Reiniciar para la próxima jugada
+            firstCard = null;
 
-            // Retroalimentación y sonido
+            // Feedback y sonido
             document.getElementById('sound-incorrect').play();
             document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-        }, 1000); // Tiempo para mostrar las cartas
+        }, 1000); // Tiempo para que las cartas permanezcan volteadas
     }
 }
 
-// Asegúrate de que el listener de clic esté correctamente configurado
+// Configurar eventos de clic solo para las cartas
 document.querySelectorAll('.card').forEach((card) => {
     card.addEventListener('click', handleCardClick);
 });
-
 
 	  
 
