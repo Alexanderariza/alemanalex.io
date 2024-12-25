@@ -252,7 +252,7 @@
             cardElement.classList.add('card');
             cardElement.innerHTML = `
                 <div class="back">"?"</div>
-                <div class="front">${card.word}<em>${card.translation}</em></div>
+                <div class="front">${card.word}</div>
             `;
             cardElement.dataset.match = card.antonym;
             cardElement.addEventListener('click', () => handleCardClick(cardElement));
@@ -272,7 +272,7 @@
             return;
         }
 
-        if (firstCard.dataset.match === cardElement.querySelector('.back').textContent) {
+        if (firstCard.dataset.match === cardElement.querySelector('.front').textContent) {
             firstCard.classList.add('matched');
             cardElement.classList.add('matched');
             firstCard = null;
