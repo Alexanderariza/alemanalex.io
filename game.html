@@ -272,7 +272,7 @@
             return;
         }
 
-        if (firstCard.dataset.match === cardElement.querySelector('.front').textContent) {
+        if (firstCard.dataset.match === cardElement.querySelector('.back').textContent) {
             firstCard.classList.add('matched');
             cardElement.classList.add('matched');
             firstCard = null;
