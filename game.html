@@ -265,48 +265,52 @@
 
     let firstCard = null;
 
-    function handleCardClick(cardElement) {
-        if (cardElement.classList.contains('flipped')) return;
+function handleCardClick(cardElement) {
+    if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
 
-        cardElement.classList.add('flipped');
+    cardElement.classList.add('flipped');
 
-        if (!firstCard) {
-            firstCard = cardElement;
-            return;
-        }
+    if (!firstCard) {
+        firstCard = cardElement;
+        return;
+    }
 
     // Verificar coincidencia basada en `data-match` y `data-translation`
-    if (
+    const isMatch =
         firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
-        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim()
-    ) {
+        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim();
+
+    if (isMatch) {
         // Coincidencia correcta
-        firstCard.classList.add('matched');
-        cardElement.classList.add('matched');
-        firstCard = null;
+        setTimeout(() => {
+            firstCard.classList.add('matched');
+            cardElement.classList.add('matched');
+
+            // Retraso adicional antes de desaparecer
+            setTimeout(() => {
+                firstCard.style.visibility = 'hidden';
+                cardElement.style.visibility = 'hidden';
+                firstCard = null; // Reiniciar para la próxima jugada
+            }, 1500); // Tiempo adicional para que el jugador vea las cartas
+        }, 500); // Retraso para permitir que la segunda carta gire
+
+        // Retroalimentación y sonido
         document.getElementById('sound-correct').play();
         document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
     } else {
-        // Coincidencia incorrecta	    
-            setTimeout(() => {
-                firstCard.classList.remove('flipped');
-                cardElement.classList.remove('flipped');
-                firstCard = null;
-                document.getElementById('sound-incorrect').play();
-                document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-            }, 1000);
-        }
-    }
+        // Coincidencia incorrecta
+        setTimeout(() => {
+            firstCard.classList.remove('flipped');
+            cardElement.classList.remove('flipped');
+            firstCard = null; // Reiniciar para la próxima jugada
 
-    // Población del menú de selección de nivel
-    const levelSelect = document.getElementById('level-select');
-    for (const [level, data] of Object.entries(levels)) {
-        const levelOption = document.createElement('a');
-        levelOption.href = "#";
-        levelOption.textContent = `Nivel ${level}`;
-        levelOption.addEventListener('click', () => initGame(level));
-        levelSelect.appendChild(levelOption);
+            // Retroalimentación y sonido
+            document.getElementById('sound-incorrect').play();
+            document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
+        }, 1000); // Retraso para que las cartas se queden visibles brevemente
     }
+}
+
   </script>
 </body>
 </html>
