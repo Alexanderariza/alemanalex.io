@@ -251,8 +251,8 @@
             const cardElement = document.createElement('div');
             cardElement.classList.add('card');
             cardElement.innerHTML = `
-                <div class="front">"?"</div>
-                <div class="back">${card.word}<em>${card.translation}</em></div>
+                <div class="back">"?"</div>
+                <div class="front">${card.word}<em>${card.translation}</em></div>
             `;
             cardElement.dataset.match = card.antonym;
             cardElement.addEventListener('click', () => handleCardClick(cardElement));
