@@ -262,10 +262,10 @@
         });
     }
 
-let firstCard = null;
+	  let firstCard = null;
 
 function handleCardClick(cardElement) {
-    if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
+    if (cardElement.classList.contains('flipped')) return;
 
     cardElement.classList.add('flipped');
 
@@ -274,42 +274,28 @@ function handleCardClick(cardElement) {
         return;
     }
 
-    // Verificar coincidencia basada en los atributos del dataset
-    const isMatch =
-        firstCard.dataset.match === cardElement.dataset.match &&
-        firstCard.dataset.translation === cardElement.dataset.translation;
-
-    if (isMatch) {
-        // Coincidencia correcta: deja que se gire la segunda carta antes de desaparecer
-        setTimeout(() => {
-            firstCard.classList.add('matched');
-            cardElement.classList.add('matched');
-
-            // Retroalimentación y sonido
-            document.getElementById('sound-correct').play();
-            document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
-
-            // Desaparecer las cartas después de 1.5 segundos para que se puedan leer
-            setTimeout(() => {
-                firstCard.style.visibility = 'hidden';
-                cardElement.style.visibility = 'hidden';
-                firstCard = null; // Restablecer la variable
-            }, 1500); // Tiempo para leer (1.5 segundos)
-        }, 500); // Tiempo para que la segunda carta gire (0.5 segundos)
+    // Verificar coincidencia basada en `data-match` y `data-translation`
+    if (
+        firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
+        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim()
+    ) {
+        // Coincidencia correcta
+        firstCard.classList.add('matched');
+        cardElement.classList.add('matched');
+        firstCard = null;
+        document.getElementById('sound-correct').play();
+        document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
     } else {
-        // Coincidencia incorrecta: Voltear las cartas de nuevo
+        // Coincidencia incorrecta
         setTimeout(() => {
             firstCard.classList.remove('flipped');
             cardElement.classList.remove('flipped');
             firstCard = null;
-
-            // Retroalimentación y sonido
             document.getElementById('sound-incorrect').play();
             document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-        }, 1000); // Tiempo para ver la segunda carta (1 segundo)
+        }, 1000);
     }
 }
-
 
   </script>
 </body>
