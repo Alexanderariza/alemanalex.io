@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego Geográfico - Adivina los Estados</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #map {
+            flex: 1;
+            height: 100%;
+            background-color: black;
+        }
+
+        #question-container {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.3);
+        }
+
+        #question-container h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: white;
+        }
+
+        #result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #score {
+            margin-top: 10px;
+        }
+
+        #timer {
+            margin-top: 10px;
+            font-weight: bold;
+            color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<div id="question-container">
+    <h2>¿Dónde está el estado: <span id="state-name">?</span></h2>
+    <div id="timer">Tiempo restante: <span id="time-left">10</span> segundos</div>
+    <div id="result"></div>
+    <div id="score">Correctas: <span id="correct-score">0</span>, Incorrectas: <span id="wrong-score">0</span></div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map', {
+        center: [51.1657, 10.4515], // Coordenadas centrales de Alemania
+        zoom: 6,
+        zoomControl: false
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors',
+    }).addTo(map);
+
+    let currentState = null;
+    let geoJsonLayer = null;
+    let correctScore = 0;
+    let wrongScore = 0;
+    let timer;
+    const timeLimit = 10;
+
+    const translations = {
+        "Baden-Württemberg": { es: "Baden-Wurtemberg", en: "Baden-Württemberg", de: "Baden-Württemberg" },
+        "Bayern": { es: "Baviera", en: "Bavaria", de: "Bayern" },
+        "Berlin": { es: "Berlín", en: "Berlin", de: "Berlin" },
+        // Añadir más estados aquí si es necesario
+    };
+
+    const currentLanguage = "es";
+
+    // Usamos el enlace correcto para el archivo GeoJSON con las divisiones de los estados
+    fetch('https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/refs/heads/main/2_bundeslaender/4_niedrig.geo.json')
+        .then(response => response.json())
+        .then(data => {
+            geoJsonLayer = L.geoJSON(data, {
+                style: () => ({
+                    color: "red",
+                    weight: 2,
+                    fillColor: "black",
+                    fillOpacity: 0.5
+                }),
+                onEachFeature: (feature, layer) => {
+                    layer.on('click', () => checkAnswer(feature.properties.name, layer));
+                }
+            }).addTo(map);
+
+            startGame();
+        });
+
+    function startGame() {
+        clearInterval(timer);
+        document.getElementById('time-left').textContent = timeLimit;
+
+        const layers = geoJsonLayer.getLayers();
+        const randomLayer = layers[Math.floor(Math.random() * layers.length)];
+        currentState = randomLayer.feature.properties.name;
+
+        const translatedState = translations[currentState]?.[currentLanguage] || currentState;
+        document.getElementById('state-name').textContent = translatedState;
+        document.getElementById('result').textContent = '';
+
+        let timeLeft = timeLimit;
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById('time-left').textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                wrongScore++;
+                updateScore();
+                alert("¡Se acabó el tiempo!");
+                startGame();
+            }
+        }, 1000);
+    }
+
+    function checkAnswer(selectedState, layer) {
+        const result = document.getElementById('result');
+
+        if (selectedState === currentState) {
+            result.textContent = '¡Correcto!';
+            result.style.color = 'green';
+
+            layer.setStyle({ fillColor: 'green', fillOpacity: 0.7 });
+
+            correctScore++;
+            updateScore();
+
+            setTimeout(() => {
+                geoJsonLayer.resetStyle();
+                startGame();
+            }, 2000);
+        } else {
+            result.textContent = 'Incorrecto. Inténtalo de nuevo.';
+            result.style.color = 'red';
+
+            layer.setStyle({ fillColor: 'red', fillOpacity: 0.7 });
+
+            wrongScore++;
+            updateScore();
+
+            setTimeout(() => {
+                geoJsonLayer.resetStyle(layer);
+            }, 1000);
+        }
+    }
+
+    function updateScore() {
+        document.getElementById('correct-score').textContent = correctScore;
+        document.getElementById('wrong-score').textContent = wrongScore;
+    }
+</script>
+
+</body>
+</html>
