@@ -263,9 +263,15 @@
         });
     }
 
-let firstCard = null; // Para almacenar la primera carta seleccionada
 
-function handleCardClick(cardElement) {
+	  let firstCard = null; // Para almacenar la primera carta seleccionada
+
+function handleCardClick(event) {
+    // Prevenir que este clic afecte otros elementos
+    event.stopPropagation();
+
+    const cardElement = event.currentTarget;
+
     // Evitar que se interactúe con cartas ya volteadas o emparejadas
     if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
 
@@ -313,6 +319,12 @@ function handleCardClick(cardElement) {
         }, 1000); // Tiempo para mostrar las cartas
     }
 }
+
+// Asegúrate de que el listener de clic esté correctamente configurado
+document.querySelectorAll('.card').forEach((card) => {
+    card.addEventListener('click', handleCardClick);
+});
+
 
 	  
 
