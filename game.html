@@ -252,7 +252,7 @@
             cardElement.classList.add('card');
             cardElement.innerHTML = `
                 <div class="front">${card.word}</div>
-                <div class="back">${card.translation}</div>
+                <div class="back">${card.word}<em>${card.translation}</em></div>
             `;
             cardElement.dataset.match = card.antonym;
             cardElement.addEventListener('click', () => handleCardClick(cardElement));
