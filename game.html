@@ -264,66 +264,50 @@
     }
 
 
-let firstCard = null; // Para almacenar la primera carta seleccionada
+ let firstCard = null;
 
-function handleCardClick(event) {
-    // Prevenir conflictos con otros elementos
-    event.stopImmediatePropagation();
+    function handleCardClick(cardElement) {
+        if (cardElement.classList.contains('flipped')) return;
 
-    const cardElement = event.currentTarget;
+        cardElement.classList.add('flipped');
 
-    // Evitar interacción con cartas ya volteadas o emparejadas
-    if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
+        if (!firstCard) {
+            firstCard = cardElement;
+            return;
+        }
 
-    cardElement.classList.add('flipped');
-
-    if (!firstCard) {
-        // Almacenar la primera carta seleccionada
-        firstCard = cardElement;
-        return;
-    }
-
-    // Verificar si las cartas coinciden
-    const isMatch =
-        firstCard.dataset.match === cardElement.dataset.match &&
-        firstCard.dataset.translation === cardElement.dataset.translation;
-
-    if (isMatch) {
+    // Verificar coincidencia basada en `data-match` y `data-translation`
+    if (
+        firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
+        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim()
+    ) {
         // Coincidencia correcta
-        setTimeout(() => {
-            firstCard.classList.add('matched');
-            cardElement.classList.add('matched');
-
-            // Opcional: ocultar después de un tiempo
-            setTimeout(() => {
-                firstCard.style.visibility = 'hidden';
-                cardElement.style.visibility = 'hidden';
-                firstCard = null;
-            }, 1500); // Tiempo extra para que se vean las cartas
-        }, 500); // Tiempo para girar la segunda carta
-
-        // Feedback y sonido
+        firstCard.classList.add('matched');
+        cardElement.classList.add('matched');
+        firstCard = null;
         document.getElementById('sound-correct').play();
         document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
     } else {
-        // Coincidencia incorrecta
-        setTimeout(() => {
-            firstCard.classList.remove('flipped');
-            cardElement.classList.remove('flipped');
-            firstCard = null;
-
-            // Feedback y sonido
-            document.getElementById('sound-incorrect').play();
-            document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-        }, 1000); // Tiempo para que las cartas permanezcan volteadas
+        // Coincidencia incorrecta	    
+            setTimeout(() => {
+                firstCard.classList.remove('flipped');
+                cardElement.classList.remove('flipped');
+                firstCard = null;
+                document.getElementById('sound-incorrect').play();
+                document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
+            }, 1000);
+        }
     }
-}
 
-// Configurar eventos de clic solo para las cartas
-document.querySelectorAll('.card').forEach((card) => {
-    card.addEventListener('click', handleCardClick);
-});
-
+    // Población del menú de selección de nivel
+    const levelSelect = document.getElementById('level-select');
+    for (const [level, data] of Object.entries(levels)) {
+        const levelOption = document.createElement('a');
+        levelOption.href = "#";
+        levelOption.textContent = `Nivel ${level}`;
+        levelOption.addEventListener('click', () => initGame(level));
+        levelSelect.appendChild(levelOption);
+    }
 	  
 
   </script>
