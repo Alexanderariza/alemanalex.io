@@ -262,7 +262,7 @@
         });
     }
 
-    let firstCard = null;
+let firstCard = null;
 
 function handleCardClick(cardElement) {
     if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
@@ -274,27 +274,27 @@ function handleCardClick(cardElement) {
         return;
     }
 
-    // Verificar coincidencia basada en `data-match` y `data-translation`
+    // Verificar coincidencia basada en los atributos del dataset
     const isMatch =
-        firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
-        firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim();
+        firstCard.dataset.match === cardElement.dataset.match &&
+        firstCard.dataset.translation === cardElement.dataset.translation;
 
     if (isMatch) {
         // Coincidencia correcta: deja que se gire la segunda carta antes de desaparecer
         setTimeout(() => {
             firstCard.classList.add('matched');
             cardElement.classList.add('matched');
-            firstCard = null;
 
             // Retroalimentación y sonido
             document.getElementById('sound-correct').play();
             document.getElementById('feedback').textContent = "¡Emparejamiento correcto!";
 
-            // Opcional: Desaparecer después de un tiempo para que se pueda leer
+            // Desaparecer las cartas después de 1.5 segundos para que se puedan leer
             setTimeout(() => {
                 firstCard.style.visibility = 'hidden';
                 cardElement.style.visibility = 'hidden';
-            }, 1500); // Tiempo extra para leer (1.5 segundos)
+                firstCard = null; // Restablecer la variable
+            }, 1500); // Tiempo para leer (1.5 segundos)
         }, 500); // Tiempo para que la segunda carta gire (0.5 segundos)
     } else {
         // Coincidencia incorrecta: Voltear las cartas de nuevo
@@ -306,9 +306,10 @@ function handleCardClick(cardElement) {
             // Retroalimentación y sonido
             document.getElementById('sound-incorrect').play();
             document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-        }, 1000);
+        }, 1000); // Tiempo para ver la segunda carta (1 segundo)
     }
 }
+
 
   </script>
 </body>
