@@ -263,19 +263,21 @@
         });
     }
 
-    let firstCard = null;
+let firstCard = null; // Para almacenar la primera carta seleccionada
 
 function handleCardClick(cardElement) {
+    // Evitar que se interactúe con cartas ya volteadas o emparejadas
     if (cardElement.classList.contains('flipped') || cardElement.classList.contains('matched')) return;
 
     cardElement.classList.add('flipped');
 
     if (!firstCard) {
+        // Almacenar la primera carta volteada
         firstCard = cardElement;
         return;
     }
 
-    // Verificar coincidencia basada en `data-match` y `data-translation`
+    // Verificar si hay coincidencia
     const isMatch =
         firstCard.dataset.match === cardElement.querySelector('.front').childNodes[0].textContent.trim() &&
         firstCard.dataset.translation === cardElement.querySelector('.front em').textContent.trim();
@@ -283,16 +285,17 @@ function handleCardClick(cardElement) {
     if (isMatch) {
         // Coincidencia correcta
         setTimeout(() => {
+            // Marcar ambas cartas como emparejadas
             firstCard.classList.add('matched');
             cardElement.classList.add('matched');
 
-            // Retraso adicional antes de desaparecer
+            // Retraso antes de ocultar las cartas
             setTimeout(() => {
                 firstCard.style.visibility = 'hidden';
                 cardElement.style.visibility = 'hidden';
                 firstCard = null; // Reiniciar para la próxima jugada
-            }, 1500); // Tiempo adicional para que el jugador vea las cartas
-        }, 500); // Retraso para permitir que la segunda carta gire
+            }, 1500); // Tiempo para que las cartas permanezcan visibles
+        }, 500); // Tiempo para que gire la segunda carta
 
         // Retroalimentación y sonido
         document.getElementById('sound-correct').play();
@@ -307,9 +310,11 @@ function handleCardClick(cardElement) {
             // Retroalimentación y sonido
             document.getElementById('sound-incorrect').play();
             document.getElementById('feedback').textContent = "Emparejamiento incorrecto. Intenta de nuevo.";
-        }, 1000); // Retraso para que las cartas se queden visibles brevemente
+        }, 1000); // Tiempo para mostrar las cartas
     }
 }
+
+	  
 
   </script>
 </body>
