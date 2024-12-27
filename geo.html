@@ -1,12 +1,35 @@
 <!DOCTYPE HTML>
-<html lang="es">
+<html lang="de">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Juego Geográfico - Adivina los Estados</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        body {
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Plantilla</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    /* Estilo mejorado para el botón */
+    .test-button {
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .test-button:hover {
+      background-color: #45a049;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    }
+    .test-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: black;
@@ -53,130 +76,207 @@
             margin-top: 10px;
             font-weight: bold;
             color: lightgreen;
-        }
-    </style>
+        }    
+
+</style>
+
 </head>
-<body>
+<body class="is-preload">
 
-<div id="map"></div>
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
 
-<div id="question-container">
-    <h2>¿Dónde está el estado: <span id="state-name">?</span></h2>
-    <div id="timer">Tiempo restante: <span id="time-left">10</span> segundos</div>
-    <div id="result"></div>
-    <div id="score">Correctas: <span id="correct-score">0</span>, Incorrectas: <span id="wrong-score">0</span></div>
-</div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script>
-    const map = L.map('map', {
-        center: [51.1657, 10.4515], // Coordenadas centrales de Alemania
-        zoom: 6,
-        zoomControl: false
-    });
+      </div>
+    </header>
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-        attribution: '© OpenStreetMap contributors',
-    }).addTo(map);
+    <!-- Menu -->
+    <nav id="menu">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gramar.html">Gramática para Dummis</a></li>
+        <li><a href="vocal.html">Vocabulario básico</a></li>
+        <li><a href="lesen.html">Escuchar y Leer</a></li>
+        <li><a href="test.html">Test & Treiner</a></li>
+      </ul>
+    </nav>
 
-    let currentState = null;
-    let geoJsonLayer = null;
-    let correctScore = 0;
-    let wrongScore = 0;
-    let timer;
-    const timeLimit = 10;
+    <!-- Main -->
+   
+    <div id="map"></div>
 
-    const translations = {
-        "Baden-Württemberg": { es: "Baden-Wurtemberg", en: "Baden-Württemberg", de: "Baden-Württemberg" },
-        "Bayern": { es: "Baviera", en: "Bavaria", de: "Bayern" },
-        "Berlin": { es: "Berlín", en: "Berlin", de: "Berlin" },
-        // Añadir más estados aquí si es necesario
-    };
+    <div id="question-container">
+        <h2>¿Dónde está el estado: <span id="state-name">?</span></h2>
+        <div id="timer">Tiempo restante: <span id="time-left">10</span> segundos</div>
+        <div id="result"></div>
+        <div id="score">Correctas: <span id="correct-score">0</span>, Incorrectas: <span id="wrong-score">0</span></div>
+    </div>
 
-    const currentLanguage = "es";
 
-    // Usamos el enlace correcto para el archivo GeoJSON con las divisiones de los estados
-    fetch('https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/refs/heads/main/2_bundeslaender/4_niedrig.geo.json')
-        .then(response => response.json())
-        .then(data => {
-            geoJsonLayer = L.geoJSON(data, {
-                style: () => ({
-                    color: "red",
-                    weight: 2,
-                    fillColor: "black",
-                    fillOpacity: 0.5
-                }),
-                onEachFeature: (feature, layer) => {
-                    layer.on('click', () => checkAnswer(feature.properties.name, layer));
-                }
-            }).addTo(map);
 
-            startGame();
-        });
 
-    function startGame() {
-        clearInterval(timer);
-        document.getElementById('time-left').textContent = timeLimit;
 
-        const layers = geoJsonLayer.getLayers();
-        const randomLayer = layers[Math.floor(Math.random() * layers.length)];
-        currentState = randomLayer.feature.properties.name;
 
-        const translatedState = translations[currentState]?.[currentLanguage] || currentState;
-        document.getElementById('state-name').textContent = translatedState;
-        document.getElementById('result').textContent = '';
 
-        let timeLeft = timeLimit;
-        timer = setInterval(() => {
-            timeLeft--;
-            document.getElementById('time-left').textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(timer);
-                wrongScore++;
-                updateScore();
-                alert("¡Se acabó el tiempo!");
-                startGame();
-            }
-        }, 1000);
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="copyright">
+          <li>&copy; AlemAlex. All rights reserved</li>
+          <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Script de Texto a Voz -->
+  <script>
+    function flipCard(card) {
+      card.classList.toggle("flipped");
     }
 
-    function checkAnswer(selectedState, layer) {
-        const result = document.getElementById('result');
-
-        if (selectedState === currentState) {
-            result.textContent = '¡Correcto!';
-            result.style.color = 'green';
-
-            layer.setStyle({ fillColor: 'green', fillOpacity: 0.7 });
-
-            correctScore++;
-            updateScore();
-
-            setTimeout(() => {
-                geoJsonLayer.resetStyle();
-                startGame();
-            }, 2000);
-        } else {
-            result.textContent = 'Incorrecto. Inténtalo de nuevo.';
-            result.style.color = 'red';
-
-            layer.setStyle({ fillColor: 'red', fillOpacity: 0.7 });
-
-            wrongScore++;
-            updateScore();
-
-            setTimeout(() => {
-                geoJsonLayer.resetStyle(layer);
-            }, 1000);
-        }
+    function speakWord(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'de-DE';  // Alemán (Alemania)
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Tu navegador no soporta la función de síntesis de voz.");
+      }
     }
+  </script>
 
-    function updateScore() {
-        document.getElementById('correct-score').textContent = correctScore;
-        document.getElementById('wrong-score').textContent = wrongScore;
-    }
-</script>
+  <!-- Scripts adicionales -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+      const map = L.map('map', {
+          center: [51.1657, 10.4515], // Coordenadas centrales de Alemania
+          zoom: 6,
+          zoomControl: false
+      });
+  
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '© OpenStreetMap contributors',
+      }).addTo(map);
+  
+      let currentState = null;
+      let geoJsonLayer = null;
+      let correctScore = 0;
+      let wrongScore = 0;
+      let timer;
+      const timeLimit = 30;
+  
+      const translations = {
+          "Baden-Württemberg": { es: "Baden-Wurtemberg", en: "Baden-Württemberg", de: "Baden-Württemberg" },
+          "Bayern": { es: "Baviera", en: "Bavaria", de: "Bayern" },
+          "Berlin": { es: "Berlín", en: "Berlin", de: "Berlin" },
+          // Añadir más estados aquí si es necesario
+      };
+  
+      const currentLanguage = "es";
+  
+      // Usamos el enlace correcto para el archivo GeoJSON con las divisiones de los estados
+      fetch('https://raw.githubusercontent.com/isellsoap/deutschlandGeoJSON/refs/heads/main/2_bundeslaender/4_niedrig.geo.json')
+          .then(response => response.json())
+          .then(data => {
+              geoJsonLayer = L.geoJSON(data, {
+                  style: () => ({
+                      color: "red",
+                      weight: 2,
+                      fillColor: "black",
+                      fillOpacity: 0.5
+                  }),
+                  onEachFeature: (feature, layer) => {
+                      layer.on('click', () => checkAnswer(feature.properties.name, layer));
+                  }
+              }).addTo(map);
+  
+              startGame();
+          });
+  
+      function startGame() {
+          clearInterval(timer);
+          document.getElementById('time-left').textContent = timeLimit;
+  
+          const layers = geoJsonLayer.getLayers();
+          const randomLayer = layers[Math.floor(Math.random() * layers.length)];
+          currentState = randomLayer.feature.properties.name;
+  
+          const translatedState = translations[currentState]?.[currentLanguage] || currentState;
+          document.getElementById('state-name').textContent = translatedState;
+          document.getElementById('result').textContent = '';
+  
+          let timeLeft = timeLimit;
+          timer = setInterval(() => {
+              timeLeft--;
+              document.getElementById('time-left').textContent = timeLeft;
+              if (timeLeft <= 0) {
+                  clearInterval(timer);
+                  wrongScore++;
+                  updateScore();
+                  alert("¡Se acabó el tiempo!");
+                  startGame();
+              }
+          }, 1000);
+      }
+  
+      function checkAnswer(selectedState, layer) {
+          const result = document.getElementById('result');
+  
+          if (selectedState === currentState) {
+              result.textContent = '¡Correcto!';
+              result.style.color = 'green';
+  
+              layer.setStyle({ fillColor: 'green', fillOpacity: 0.7 });
+  
+              correctScore++;
+              updateScore();
+  
+              setTimeout(() => {
+                  geoJsonLayer.resetStyle();
+                  startGame();
+              }, 2000);
+          } else {
+              result.textContent = 'Incorrecto. Inténtalo de nuevo.';
+              result.style.color = 'red';
+  
+              layer.setStyle({ fillColor: 'red', fillOpacity: 0.7 });
+  
+              wrongScore++;
+              updateScore();
+  
+              setTimeout(() => {
+                  geoJsonLayer.resetStyle(layer);
+              }, 1000);
+          }
+      }
+  
+      function updateScore() {
+          document.getElementById('correct-score').textContent = correctScore;
+          document.getElementById('wrong-score').textContent = wrongScore;
+      }
+  </script>
+
 
 </body>
 </html>
