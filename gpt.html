@@ -123,14 +123,17 @@
         n.appendChild(y);
     })(window,document,'https://api.brainybear.ai/cdn/js/bear','.js?id=1264');
 
-    // Aquí se incluye el MessageTemplate:31
+    // Ejecutar al cargar la página
     window.onload = function() {
         b.ux('init');  // Inicializa el chatbot
+
+        // Cargar el template específico: MessageTemplate:31
         b.ux('sendMessage', {
-            templateId: 31  // Pasar el templateId como parámetro
+            template: 31  // Esto indica que se debe usar el template 31
         });
     };
 </script>
+
 
     
     <!-- Scripts adicionales -->
