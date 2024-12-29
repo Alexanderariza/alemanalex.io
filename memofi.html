@@ -1,0 +1,232 @@
+<!DOCTYPE HTML>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Plantilla</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    /* Estilo mejorado para el botón */
+    .test-button {
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .test-button:hover {
+      background-color: #45a049;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    }
+    .test-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #232223;
+      color: white;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      overflow: hidden;
+      min-width: 600px;
+      max-width: 900px;
+      width: calc(100% - 100px);
+      height: 400px;
+      position: relative;
+      justify-content: space-between;
+    }
+
+    .option {
+      position: relative;
+      overflow: hidden;
+      min-width: 60px;
+      margin: 10px;
+      background: #E6E9ED;
+      background-size: auto 120%;
+      background-position: center;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      transition: 0.5s cubic-bezier(0.05, 0.61, 0.41, 0.95);
+      border-radius: 15px;
+    }
+
+    .option img {
+      max-width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .full-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      visibility: hidden;
+    }
+
+    .full-screen img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+
+    .close-fullscreen {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 20px;
+      color: black;
+    }
+
+    .navigation-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .prev, .next {
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      color: black;
+    }
+  </style>
+</head>
+<body class="is-preload">
+
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gramar.html">Gramática para Dummis</a></li>
+        <li><a href="vocal.html">Vocabulario básico</a></li>
+        <li><a href="lesen.html">Escuchar y Leer</a></li>
+        <li><a href="test.html">Test & Treiner</a></li>
+      </ul>
+    </nav>
+
+    <!-- Galería de Imágenes -->
+    <div class="options">
+      <div class="option" data-image="memo/memo1.webp">
+        <img src="memo/memo1.webp" alt="Blonkisoaz">
+      </div>
+      <div class="option" data-image="memo/memo2.webp">
+        <img src="memo/memo2.webp" alt="Blonkisoaz">
+      </div>
+      <div class="option" data-image="memo/memo3.webp">
+        <img src="memo/memo3.webp" alt="Blonkisoaz">
+      </div>
+      <div class="option" data-image="memo/memo4.webp">
+        <img src="memo/memo4.webp" alt="Blonkisoaz">
+      </div>
+      <div class="option" data-image="memo/memo5.webp">
+        <img src="memo/memo5.webp" alt="Blonkisoaz">
+      </div>
+    </div>
+
+    <!-- Pantalla Completa -->
+    <div class="full-screen" id="fullscreen-container">
+      <button class="close-fullscreen" onclick="closeFullscreen()">X</button>
+      <img id="fullscreen-image" src="" alt="Fullscreen Image">
+      <div class="navigation-buttons">
+        <button class="prev" onclick="prevImage()">&#10094;</button>
+        <button class="next" onclick="nextImage()">&#10095;</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="copyright">
+          <li>&copy; AlemAlex. All rights reserved</li>
+          <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script>
+    let currentIndex = 0;
+    const images = [
+      "memo/memo1.webp",
+      "memo/memo2.webp",
+      "memo/memo3.webp",
+      "memo/memo4.webp",
+      "memo/memo5.webp"
+    ];
+
+    $(".option").click(function () {
+      currentIndex = $(".option").index(this);
+      const imageSrc = $(this).find("img").attr("src");
+      $("#fullscreen-image").attr("src", imageSrc);
+      $("#fullscreen-container").css("visibility", "visible");
+    });
+
+    function closeFullscreen() {
+      $("#fullscreen-container").css("visibility", "hidden");
+    }
+
+    function prevImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      $("#fullscreen-image").attr("src", images[currentIndex]);
+    }
+
+    function nextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      $("#fullscreen-image").attr("src", images[currentIndex]);
+    }
+  </script>
+
+    <!-- Scripts adicionales -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  
+</body>
+</html>
