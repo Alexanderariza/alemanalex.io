@@ -113,12 +113,25 @@
 
 <body class="is-preload">
 
-    <div>
-        <h1>Aprende Alemán con GPT</h1>
-        <textarea id="input" placeholder="Escribe algo aquí..." rows="5"></textarea>
-        <button id="submit">Enviar</button>
-        <div id="output"></div>
-    </div>
+<script>
+    (function(b,r,a,i,n,y){
+        b.ux=b.ux||function(){(b.ux.q=b.ux.q||[]).push(arguments)};
+        n=r.getElementsByTagName('head')[0]; 
+        y=r.createElement('script'); 
+        y.async=1; 
+        y.src=a+i;
+        n.appendChild(y);
+    })(window,document,'https://api.brainybear.ai/cdn/js/bear','.js?id=1264');
+
+    // Aquí se incluye el MessageTemplate:31
+    window.onload = function() {
+        b.ux('init');  // Inicializa el chatbot
+        b.ux('sendMessage', {
+            templateId: 31  // Pasar el templateId como parámetro
+        });
+    };
+</script>
+
     
     <!-- Scripts adicionales -->
 <script>
