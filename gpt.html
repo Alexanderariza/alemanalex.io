@@ -1,212 +1,109 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="de">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vokabeltest</title>
-    <link rel="stylesheet" href="assets/css/main.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            margin: 10px;
-        }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Plantilla</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+    /* Estilo mejorado para el botón */
+    .test-button {
+      display: inline-block;
+      padding: 12px 25px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    .test-button:hover {
+      background-color: #45a049;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    }
+    .test-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 
-        .container {
-            display: flex;
-            gap: 20px;
-            align-items: stretch;
-            flex-wrap: wrap;
-            max-width: 100%;
-            width: 100%;
-        }
+    
 
-        .image-container {
-            flex: 1;
-            max-width: 50%;
-        }
+</style>
 
-        .image-container img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .table-container {
-            flex: 1;
-            max-width: 50%;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        td, th {
-            padding: 10px;
-            text-align: center;
-        }
-
-        select {
-            width: 100%;
-            padding: 8px;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-
-        .result-container {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .result {
-            font-weight: bold;
-            color: #333;
-            margin-top: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .image-container, .table-container {
-                max-width: 100%;
-            }
-
-            .image-container img {
-                width: 100%;
-            }
-
-            button {
-                font-size: 16px;
-                padding: 10px 20px;
-            }
-        }
-    </style>
 </head>
-
 <body class="is-preload">
 
-<script>
-    (function(b,r,a,i,n,y){
-        b.ux=b.ux||function(){(b.ux.q=b.ux.q||[]).push(arguments)};
-        n=r.getElementsByTagName('head')[0]; 
-        y=r.createElement('script'); 
-        y.async=1; 
-        y.src=a+i;
-        n.appendChild(y);
-    })(window,document,'https://api.brainybear.ai/cdn/js/bear','.js?id=1264');
-
-    // Ejecutar al cargar la página
-    window.onload = function() {
-        b.ux('init');  // Inicializa el chatbot
-
-        // Cargar el template específico: MessageTemplate:31
-        b.ux('sendMessage', {
-            template: 31  // Esto indica que se debe usar el template 31
-        });
-    };
-</script>
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <div class="inner">
+        <a href="index.html" class="logo">
+          <span class="symbol"><img src="images/log.gif" alt="" /></span><span class="title">AlemAlex</span>
+        </a>
+        <nav>
+          <ul>
+            <li><a href="#menu">Menu</a></li>
+          </ul>
+        </nav>
 
 
-    
-    <!-- Scripts adicionales -->
-<script>
-    (function(b,r,a,i,n,y){
-        b.ux=b.ux||function(){(b.ux.q=b.ux.q||[]).push(arguments)};
-        n=r.getElementsByTagName('head')[0]; y=r.createElement('script');y.async=1; y.src=a+i;
-        n.appendChild(y);
-    })(window,document,'https://api.brainybear.ai/cdn/js/bear','.js?id=1264');
-</script>
-    
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/browser.min.js"></script>
-    <script src="assets/js/breakpoints.min.js"></script>
-    <script src="assets/js/util.js"></script>
-    <script src="assets/js/main.js"></script>
+      </div>
+    </header>
 
-    <!-- Script para integrar la API de OpenAI -->
-    <script>
-        async function getGermanLesson(prompt) {
-            try {
-const response = await fetch('https://cors-anywhere.herokuapp.com/https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${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}`
-    },
-    body: JSON.stringify({
-        model: "gpt-4",
-        messages: [
-            { role: "system", content: "Eres un profesor de alemán hablando en español." },
-            { role: "user", content: prompt }
-        ],
-        max_tokens: 100
-    })
-});
+    <!-- Menu -->
+    <nav id="menu">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gramar.html">Gramática para Dummis</a></li>
+        <li><a href="vocal.html">Vocabulario básico</a></li>
+        <li><a href="lesen.html">Escuchar y Leer</a></li>
+        <li><a href="test.html">Test & Treiner</a></li>
+      </ul>
+    </nav>
 
+    <!-- Main -->
+   
+    <iframe src="https://www.yeschat.ai/i/gpts-2OToJRu8tq-German-TutorBot" width="432" height="932" style="max-width: 100%;"></iframe>
 
+    <!-- Footer -->
+    <footer id="footer">
+      <div class="inner">
+        <ul class="copyright">
+          <li>&copy; AlemAlex. All rights reserved</li>
+          <li>Design: <a href="https://geo-way.github.io/GeoWay.io/">GeoWay</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
 
+  <!-- Script de Texto a Voz -->
+  <script>
+    function flipCard(card) {
+      card.classList.toggle("flipped");
+    }
 
-                if (!response.ok) {
-                    console.error("Error al obtener datos de la API:", response.statusText);
-                    return "Lo siento, hubo un problema al conectarse con la API.";
-                }
+    function speakWord(text) {
+      if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'de-DE';  // Alemán (Alemania)
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert("Tu navegador no soporta la función de síntesis de voz.");
+      }
+    }
+  </script>
 
-                const data = await response.json();
-                console.log(data); // Depuración para ver qué devuelve la API
-                return data.choices[0].message.content || "No se recibió respuesta esperada.";
-            } catch (error) {
-                console.error("Error en la solicitud:", error);
-                return "Hubo un error al procesar la solicitud.";
-            }
-        }
-
-        // Configura el botón para enviar datos
-        document.getElementById("submit").addEventListener("click", async () => {
-            const userPrompt = document.getElementById("input").value;
-
-            if (!userPrompt.trim()) {
-                document.getElementById("output").innerText = "Por favor, escribe algo antes de enviar.";
-                return;
-            }
-
-            // Muestra un mensaje de carga
-            document.getElementById("output").innerText = "Cargando respuesta...";
-
-            // Llama a la función para obtener la respuesta
-            const reply = await getGermanLesson(userPrompt);
-
-            // Muestra la respuesta en la página
-            document.getElementById("output").innerText = reply;
-        });
-    </script>
+  <!-- Scripts adicionales -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
 
 </body>
 </html>
